@@ -32,7 +32,7 @@ public class SpellRadius : MonoBehaviour
     }
     public void NowSpawn()
     {
-        if(time == 50)
+        if(time == 250)
         {
             SpawnLighting();
             time = 0;
@@ -40,6 +40,6 @@ public class SpellRadius : MonoBehaviour
     }
     public void Disapate(GameObject light)
     {
-        Destroy(light, 1f);
+        Destroy(light, 0.5f);
     }
 }

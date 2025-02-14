@@ -14,13 +14,17 @@ public class IceSpellRadius : MonoBehaviour
     public Vector2 startPos7;
     public Vector2 startPos8;
     public Vector2[] startPosions;
+    public Vector2[] speeds;
+    float speed;
     public int rotation;
     public int IceNum;
     public int time;
+    Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         IceNum = 2;
+        speed = 2;
         startPosions = new Vector2[8];
         startPosions[0] = startPos1;
         startPosions[1] = startPos2;
@@ -30,6 +34,7 @@ public class IceSpellRadius : MonoBehaviour
         startPosions[5] = startPos6;
         startPosions[6] = startPos7;
         startPosions[7] = startPos8;
+        speeds = new Vector2[8];
     }
 
     // Update is called once per frame
@@ -37,6 +42,7 @@ public class IceSpellRadius : MonoBehaviour
     {
         playerPos = player.transform.position;
         SetPosition();
+        SetSpeed();
         time += 1;
         IceTime(IceNum);
     }
@@ -44,53 +50,55 @@ public class IceSpellRadius : MonoBehaviour
     {
         if(Nums == 2)
         {
-            NowSpawn(startPos1,0);
-            NowSpawn(startPos2, 0);
+            NowSpawn(startPos1,0, speeds[0]);
+            NowSpawn(startPos2, 180, speeds[1]);
         }
         else if (Nums == 4)
         {
-            NowSpawn(startPos5, 45);
-            NowSpawn(startPos6, -45);
-            NowSpawn(startPos7, 45);
-            NowSpawn(startPos8, -45);
+            NowSpawn(startPos5, 45, speeds[4]);
+            NowSpawn(startPos6, 45, speeds[5]);
+            NowSpawn(startPos7, -45, speeds[6]);
+            NowSpawn(startPos8, -45, speeds[7]);
         }
         else if (Nums == 6)
         {
-            NowSpawn(startPos1, 0);
-            NowSpawn(startPos2, 0);
-            NowSpawn(startPos5, 45);
-            NowSpawn(startPos6, -45);
-            NowSpawn(startPos7, 45);
-            NowSpawn(startPos8, -45);
+            NowSpawn(startPos1, 0, speeds[0]);
+            NowSpawn(startPos2, 180, speeds[1]);
+            NowSpawn(startPos5, 45, speeds[4]);
+            NowSpawn(startPos6, 45, speeds[5]);
+            NowSpawn(startPos7, -45, speeds[6]);
+            NowSpawn(startPos8, -45, speeds[7]);
         }
         else if (Nums == 8)
         {
-            NowSpawn(startPos1, 0);
-            NowSpawn(startPos2, 0);
-            NowSpawn(startPos3, 0);
-            NowSpawn(startPos4, 0);
-            NowSpawn(startPos5, 45);
-            NowSpawn(startPos6, -45);
-            NowSpawn(startPos7, 45);
-            NowSpawn(startPos8, -45);
+            NowSpawn(startPos1, 0, speeds[0]);
+            NowSpawn(startPos2, 180, speeds[1]);
+            NowSpawn(startPos3, 90, speeds[2]);
+            NowSpawn(startPos4, -90, speeds[3]);
+            NowSpawn(startPos5, 45, speeds[4]);
+            NowSpawn(startPos6, 45, speeds[5]);
+            NowSpawn(startPos7, -45, speeds[6]);
+            NowSpawn(startPos8, -45, speeds[7]);
         }
     }
     void IceTime(int Nums)
     {
-        if (time == 30)
+        if (time == 250)
         {
             NumsIce(Nums);
             time = 0;
         }
     }
-    public void NowSpawn(Vector2 pos, float rotation)
+    public void NowSpawn(Vector2 pos, float rotation, Vector2 speed)
     {
         GameObject ice = Instantiate(iceShot, pos, Quaternion.Euler(0,0,rotation));
+        rb = ice.GetComponent<Rigidbody2D>();
+        rb.linearVelocity = speed;
         Disapate(ice);
     }
     public void Disapate(GameObject icey)
     {
-        Destroy(icey, 1f);
+        Destroy(icey, 0.5f);
     }
     public void SetPosition()
     {
@@ -102,5 +110,16 @@ public class IceSpellRadius : MonoBehaviour
         startPos6 = new Vector2(playerPos.x - 0.5f, playerPos.y - 0.5f);
         startPos7 = new Vector2(playerPos.x + 0.5f, playerPos.y - 0.5f);
         startPos8 = new Vector2(playerPos.x - 0.5f, playerPos.y + 0.5f);
+    }
+    public void SetSpeed()
+    {
+        speeds[0] = new Vector2(speed,0);
+        speeds[1] = new Vector2(speed - 4, 0);
+        speeds[2] = new Vector2(0, speed - 4);
+        speeds[3] = new Vector2(0, speed);
+        speeds[4] = new Vector2(speed, speed);
+        speeds[5] = new Vector2(speed - 4, speed - 4);
+        speeds[6] = new Vector2(speed, speed - 4);
+        speeds[7] = new Vector2(speed - 4, speed);
     }
 }
