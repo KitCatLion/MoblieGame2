@@ -5,25 +5,13 @@ using System;
 
 public class SpellShots : MonoBehaviour
 {
-    TouchPhase touch;
     public GameObject fireBall;
-    public GameObject lighting;
-    public GameObject iceSpike1;
-    public GameObject iceSpike2;
-    public GameObject fireRadius;
-    public GameObject lightingRadius;
-    public GameObject iceRadius;
     public float firedis = 4;
-    public float icedis = 3.5f;
-    public float ligthdis = 5f;
     public int fireNum = 1;
-    public int iceNum = 2;
-    public int ligthNum = 1;
     public float fireTime;
-    public int iceTime;
-    public int ligthTime;
-    public float fireSpeed;
+    public float fireSpeed = 10;
     public Vector2 playerPos;
+    public Vector2 pointerPos;
     public GameObject player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,10 +23,12 @@ public class SpellShots : MonoBehaviour
     void Update()
     {
         playerPos = player.transform.position;
-        if (touch == 0)
+        if (Input.GetButtonDown("Fire1"))
         {
-            
+            pointerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            SpawnFireball(fireNum);
         }
+        
     }
     public void SpawnFireball(int fireNum)
     {
@@ -46,51 +36,13 @@ public class SpellShots : MonoBehaviour
         float angle = 0f;
         for (int i = 0; i < fireNum; i++) 
         {
-            float fireDirXpos = playerPos.x + Mathf.Sin((angle * Mathf.PI) / 180) * firedis;
-            float fireDirYpos = playerPos.y + Mathf.Sin((angle * Mathf.PI) / 180) * firedis;
+            float fireDirXpos = pointerPos.x + Mathf.Sin((angle * Mathf.PI) / 180) * firedis;
+            float fireDirYpos = pointerPos.y + Mathf.Sin((angle * Mathf.PI) / 180) * firedis;
             Vector2 projectileVec = new Vector2(fireDirXpos, fireDirYpos);
-            Vector2 projectileMoveDir = (projectileVec - playerPos).normalized * fireSpeed;
-            var proj = Instantiate(fireBall, playerPos, Quaternion.identity);
+            Vector2 projectileMoveDir = (projectileVec - pointerPos).normalized * fireSpeed;
+            var proj = Instantiate(fireBall, pointerPos, Quaternion.identity);
             proj.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(projectileMoveDir.x, projectileMoveDir.y);
             angle += angleStep;
-        }
-    }
-    public void SpawnIceShot(int iceNum)
-    {
-        float angleStep = 360f / iceNum;
-        float angle = 0f;
-        for (int i = 0; i < iceNum; i++)
-        {
-            float iceDirXpos = playerPos.x + Mathf.Sin((angle * Mathf.PI) / 180) * icedis;
-            float iceDirYpos = playerPos.y + Mathf.Sin((angle * Mathf.PI) / 180) * icedis;
-            Vector2 projectileVec = new Vector2(iceDirXpos, iceDirYpos);
-            Vector2 projectileMoveDir = (projectileVec - playerPos).normalized * fireSpeed;
-            var proj = Instantiate(iceSpike2, playerPos, Quaternion.identity);
-            proj.GetComponent<Rigidbody2D>().linearVelocity = new Vector2(projectileMoveDir.x, projectileMoveDir.y);
-            angle += angleStep;
-        }
-    }
-    public void SpawnLighting(int lightingNum)
-    {
-
-    }
-    public void iceShot()
-    {
-        if (iceNum == 2)
-        {
-            Instantiate(iceSpike1);
-        }
-        else if (iceNum == 4) 
-        {
-
-        }
-        else if (iceNum == 6)
-        {
-
-        }
-        else if (iceNum == 8)
-        {
-
         }
     }
 }
