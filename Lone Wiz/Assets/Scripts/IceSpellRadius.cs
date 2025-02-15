@@ -19,6 +19,8 @@ public class IceSpellRadius : MonoBehaviour
     public int rotation;
     public int IceNum;
     public int time;
+    public int amountTime;
+    public float deathTime;
     Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +37,8 @@ public class IceSpellRadius : MonoBehaviour
         startPosions[6] = startPos7;
         startPosions[7] = startPos8;
         speeds = new Vector2[8];
+        amountTime = 250;
+        deathTime = 0.5f;
     }
 
     // Update is called once per frame
@@ -83,7 +87,7 @@ public class IceSpellRadius : MonoBehaviour
     }
     void IceTime(int Nums)
     {
-        if (time == 250)
+        if (time == amountTime)
         {
             NumsIce(Nums);
             time = 0;
@@ -98,7 +102,7 @@ public class IceSpellRadius : MonoBehaviour
     }
     public void Disapate(GameObject icey)
     {
-        Destroy(icey, 0.5f);
+        Destroy(icey, deathTime);
     }
     public void SetPosition()
     {
