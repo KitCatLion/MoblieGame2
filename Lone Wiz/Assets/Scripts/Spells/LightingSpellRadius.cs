@@ -9,11 +9,14 @@ public class SpellRadius : MonoBehaviour
     public Vector2 center;
     public Vector2 size;
     public int time;
-    public int deathTime;
+    public int amountTime;
+    public float deathTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         size = new Vector2(2,2);
+        amountTime = 200;
+        deathTime = 0.5f;
     }
 
     // Update is called once per frame
@@ -21,7 +24,6 @@ public class SpellRadius : MonoBehaviour
     {
         center = radius.transform.position;
         time += 1;
-        deathTime += 1;
         NowSpawn();
     }
     public void SpawnLighting()
@@ -32,7 +34,7 @@ public class SpellRadius : MonoBehaviour
     }
     public void NowSpawn()
     {
-        if(time == 250)
+        if(time == amountTime)
         {
             SpawnLighting();
             time = 0;
@@ -40,6 +42,6 @@ public class SpellRadius : MonoBehaviour
     }
     public void Disapate(GameObject light)
     {
-        Destroy(light, 0.5f);
+        Destroy(light, deathTime);
     }
 }

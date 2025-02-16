@@ -243,6 +243,8 @@ MonoBehaviour:
   rotation: 0
   IceNum: 0
   time: 0
+  amountTime: 0
+  deathTime: 0
 --- !u!1 &109292723
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +363,7 @@ GameObject:
   - component: {fileID: 346598496}
   m_Layer: 0
   m_Name: Wiz
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -516,6 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Joystick: {fileID: 1949001185}
   playerSpeed: 2
+  hp: 0
 --- !u!114 &346598496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,6 +642,7 @@ MonoBehaviour:
   center: {x: 0, y: 0}
   size: {x: 2, y: 2}
   time: 0
+  amountTime: 0
   deathTime: 0
 --- !u!1 &917254053
 GameObject:
@@ -652,9 +656,10 @@ GameObject:
   - component: {fileID: 917254054}
   - component: {fileID: 917254056}
   - component: {fileID: 917254057}
+  - component: {fileID: 917254058}
   m_Layer: 0
   m_Name: shieldRadius
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -792,6 +797,28 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &917254058
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917254053}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25d449f94ca01b24281b908fa4ff5712, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &935698247
 GameObject:
   m_ObjectHideFlags: 0
