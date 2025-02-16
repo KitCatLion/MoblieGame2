@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8547337097784805821}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.41390285, w: 0.91032106}
   m_LocalPosition: {x: -3.21, y: 1.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -103,5 +103,7 @@ MonoBehaviour:
   bullet: {fileID: 2648622112975901314, guid: efe53f9f44a1db8418669edc421c553e, type: 3}
   bulletLife: 10
   speed: 15
+  shotgunPellets: 5
+  spreadAngle: 15
   spawnerType: 0
   firingRate: 0.1

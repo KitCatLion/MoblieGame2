@@ -32,7 +32,7 @@ public class BulletSpawner : MonoBehaviour
         }
     }
 
-    private void Fire()
+    public void Fire()
     {
         if (bullet)
         {
