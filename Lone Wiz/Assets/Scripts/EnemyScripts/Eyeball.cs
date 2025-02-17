@@ -44,6 +44,11 @@ public class Eyeball : MonoBehaviour
             {
                 agent.SetDestination(player.position);
             }
+            else if (distance < keepDistance - 1f) // Prevent getting too close
+            {
+                Vector3 directionAway = (transform.position - player.position).normalized;
+                agent.SetDestination(transform.position + directionAway * keepDistance);
+            }
             else
             {
                 spasmTimer += Time.deltaTime;
