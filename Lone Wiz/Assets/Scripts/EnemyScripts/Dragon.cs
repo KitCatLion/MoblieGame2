@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Dragon : MonoBehaviour
 {
     public float shootingRange = 7f;
+    public float keepDistance = 5f;
     public BulletSpawner bulletSpawner;
     public float fireCooldown = 2f;
     private Transform player;
@@ -21,15 +22,26 @@ public class Dragon : MonoBehaviour
 
     void Update()
     {
-        MoveTowardsPlayer();
+        MaintainDistance();
         AimAndShoot();
+
+        //lock rotation
+        transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 
-    void MoveTowardsPlayer()
+    void MaintainDistance()
     {
         if (player)
         {
-            agent.SetDestination(player.position);
+            float distance = Vector2.Distance(transform.position, player.position);
+            if (distance > keepDistance)
+            {
+                agent.SetDestination(player.position);
+            }
+            else
+            {
+                agent.ResetPath();
+            }
         }
     }
 
