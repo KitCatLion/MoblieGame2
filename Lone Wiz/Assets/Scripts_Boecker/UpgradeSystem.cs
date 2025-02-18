@@ -69,67 +69,128 @@ public class UpgradeSystem : MonoBehaviour
         using (StreamReader sr = new StreamReader(readDirectory + @"\" + readFileName))
 
         {
-            //sr.readline()
-
+            //sr.readline() // read name, >, correct , , close <
+            while(sr.EndOfStream)
+            {
+                string line = sr.ReadLine();
+                if(line == ability)
+                {
+                    
+                }
+            }
         }
 
     }
     #endregion
+
     #region Upgrades
-    float[] fireDPS = { 1, 2, 3 };
-    float[] iceDPS = { 1, 2, 3 };
-    float[] lightingDPS = { 1, 2, 3 };
+    //int fireball_Level = 1;       //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+    float[] fireball_UpgradeCost =   {20,50,100,130,160,300,320,360,450,550,600,700,800};
+    float[] fireball_DPS =       { 1, 2, 2, 2, 2, 2, 3, 3, 3,  4,  4,  4,  5};
+    float[] fireball_Radius =    { 0.5f, 0.5f, 1f, 1f, 1f, 1f, 1.5f, 1.5f, 1.5f, 1.5f, 2f, 2f, 2f};
+    float[] fireball_Amount =    { 1, 1, 1, 1, 2, 2, 2, 3, 3,  3,  4,  4,  4};
+    float[] fireball_Speed =     { 1, 1, 2, 2, 2, 2, 3, 3, 3,  3,  4,  4,  4};
+
+    //int iceShard_Level = 1;       //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+    int[] iceShard_UpgradeCost =   { 20, 50, 100, 130, 160, 300, 320, 360, 450, 550, 600, 700, 800 };
+    float[] iceShard_DPS =       { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
+    float[] iceShard_Radius =    { 0.5f, 0.5f, 1f, 1f, 1f, 1f, 1.5f, 1.5f, 1.5f, 1.5f, 2f, 2f, 2f };
+    float[] iceShard_Amount =    { 2, 2, 2, 4, 4, 4, 4, 4, 6, 6, 6, 6, 8 };
+    float[] iceShard_Speed =     { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 };
+
+    //int lightning_Level = 1;      //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+    int[] lightning_UpgradeCost =  { 20, 50, 100, 130, 160, 300, 320, 360, 450, 550, 600, 700, 800 };
+    float[] lightning_DPS =      { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
+    float[] lightning_Radius =   { 2, 2, 4, 4, 4, 4, 6, 6, 6, 8, 8, 8, 10 };
+    float[] lightning_Amount =   { 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4 }; //Change later
+    float[] lightning_Speed =    { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 }; //Change later
     #endregion
 
     int New_Level;
     float New_Dps, New_Amount, New_Speed;
+    private float score;
+
     void Start()
     {        
-        Fireball = new Ability("Fireball", 0);//Example
-        upgrade_Fire();
+        Fireball = new Ability("Fireball", 1);
+        Fireball.dps = fireball_DPS[Fireball.level - 1];
+        Fireball.amount = fireball_Amount[Fireball.level - 1];
+        Fireball.speed = fireball_Speed[Fireball.level - 1];
 
-        IceShard = new Ability("Ice Shard", 0);
-        upgrade_Ice();
+        IceShard = new Ability("Ice Shard", 1);
+        IceShard.dps = iceShard_DPS[IceShard.level - 1];
+        IceShard.amount = iceShard_Amount[IceShard.level - 1];
+        IceShard.speed = iceShard_Speed[IceShard.level - 1];
 
-        Lightning = new Ability("Lightning", 0);
-        upgrade_Lightning();
+        Lightning = new Ability("Lightning", 1);
+        Lightning.dps = lightning_DPS[Lightning.level - 1];
+        Lightning.amount = lightning_Amount[Lightning.level - 1];
+        Lightning.speed = lightning_Speed[Lightning.level - 1];
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         //reset temps
-        New_Level = 0;
-        New_Dps = 0;
-        New_Amount = 0;
-        New_Speed = 0;
+        //New_Level = 0;
+        //New_Dps = 0;
+        //New_Amount = 0;
+        //New_Speed = 0;
+    }
+    public void upgrade_Fireball()
+    {
+        if (Fireball.level == 13)
+        {
+            Debug.Log("Fireball is Maxed out...");
+            return;
+        }
+        if (score >= fireball_UpgradeCost[Fireball.level - 1])
+        {
+            Fireball.level++;
+            score -= fireball_UpgradeCost[Fireball.level - 1];
+
+            Fireball.dps = fireball_DPS[Fireball.level - 1];
+            Fireball.radius = fireball_Radius[Fireball.level - 1];
+            Fireball.amount = fireball_Amount[Fireball.level - 1];
+            Fireball.speed = fireball_Speed[Fireball.level - 1];
+        }
     }
 
-    public void upgrade_Fire()  //use buttons
+    public void upgrade_IceShard()
     {
-        int level = Fireball.level++;
-        ReadFile("Fireball", level, readFileName);
-        Fireball.level = New_Level;
-        Fireball.dps = New_Dps;
-        Fireball.amount = New_Amount;
-        Fireball.speed = New_Speed;
+        if (IceShard.level == 13)
+        {
+            Debug.Log("Ice Shard is Maxed out...");
+            return;
+        }
+        if (score >= iceShard_UpgradeCost[IceShard.level - 1])
+        {
+            IceShard.level++;
+            score -= iceShard_UpgradeCost[IceShard.level - 1];
+
+            IceShard.dps = iceShard_DPS[IceShard.level - 1];
+            IceShard.radius = iceShard_Radius[IceShard.level - 1];
+            IceShard.amount = iceShard_Amount[IceShard.level - 1];
+            IceShard.speed = iceShard_Speed[IceShard.level - 1];
+        }
     }
-    public void upgrade_Ice()
-    {
-        int level = IceShard.level++;
-        ReadFile("Ice Shard", level, readFileName);
-        IceShard.level = New_Level;
-        IceShard.dps = New_Dps;
-        IceShard.amount = New_Amount;
-        IceShard.speed = New_Speed;
-    }
+
     public void upgrade_Lightning()
     {
-        int level = Lightning.level++;
-        ReadFile("Lightning", level, readFileName);
-        Lightning.level = New_Level;
-        Lightning.dps = New_Dps;
-        Lightning.amount = New_Amount;
-        Lightning.speed = New_Speed;
+        if (Lightning.level == 13)
+        {
+            Debug.Log("Lightning is Maxed out...");
+            return;
+        }
+        if (score >= lightning_UpgradeCost[Lightning.level - 1])
+        {
+            Lightning.level++;
+            score -= lightning_UpgradeCost[Lightning.level - 1];
+
+            Lightning.dps = lightning_DPS[Lightning.level - 1];
+            Lightning.radius = lightning_Radius[Lightning.level - 1];
+            Lightning.amount = lightning_Amount[Lightning.level - 1];
+            Lightning.speed = lightning_Speed[Lightning.level - 1];
+        }
     }
 }
