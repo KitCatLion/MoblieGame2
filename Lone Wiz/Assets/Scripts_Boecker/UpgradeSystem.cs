@@ -142,7 +142,7 @@ public class UpgradeSystem : MonoBehaviour
     }
     public void upgrade_Fireball()
     {
-        if (Fireball.level == 13)
+        if (Fireball.level >= 13)
         {
             Debug.Log("Fireball is Maxed out...");
             return;
@@ -157,11 +157,15 @@ public class UpgradeSystem : MonoBehaviour
             Fireball.amount = fireball_Amount[Fireball.level - 1];
             Fireball.speed = fireball_Speed[Fireball.level - 1];
         }
+        else
+        {
+            Debug.Log("Not enough Score...");
+        }
     }
 
     public void upgrade_IceShard()
     {
-        if (IceShard.level == 13)
+        if (IceShard.level >= 13)
         {
             Debug.Log("Ice Shard is Maxed out...");
             return;
@@ -176,11 +180,15 @@ public class UpgradeSystem : MonoBehaviour
             IceShard.amount = iceShard_Amount[IceShard.level - 1];
             IceShard.speed = iceShard_Speed[IceShard.level - 1];
         }
+        else
+        {
+            Debug.Log("Not enough Score...");
+        }
     }
 
     public void upgrade_Lightning()
     {
-        if (Lightning.level == 13)
+        if (Lightning.level >= 13)
         {
             Debug.Log("Lightning is Maxed out...");
             return;
@@ -194,6 +202,10 @@ public class UpgradeSystem : MonoBehaviour
             Lightning.radius = lightning_Radius[Lightning.level - 1];
             Lightning.amount = lightning_Amount[Lightning.level - 1];
             Lightning.speed = lightning_Speed[Lightning.level - 1];
+        }
+        else
+        {
+            Debug.Log("Not enough Score...");
         }
     }
 }
