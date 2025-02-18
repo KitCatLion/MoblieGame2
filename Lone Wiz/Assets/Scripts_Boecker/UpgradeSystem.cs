@@ -15,7 +15,7 @@ public class UpgradeSystem : MonoBehaviour
     public string readFileName;
     public string readDirectory;
 
-    Ability Fireball, IceShard, Lightning;
+    Ability Fireball, IceShard, Lightning; 
 
     #region Updrage Txt
     void WriteToFile(string file = "")
@@ -106,24 +106,27 @@ public class UpgradeSystem : MonoBehaviour
     float[] lightning_Speed =    { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 }; //Change later
     #endregion
 
-    int New_Level;
-    float New_Dps, New_Amount, New_Speed;
+    //int New_Level;
+    //float New_Dps, New_Amount, New_Speed;
     private float score;
 
     void Start()
     {        
         Fireball = new Ability("Fireball", 1);
         Fireball.dps = fireball_DPS[Fireball.level - 1];
+        Fireball.radius = fireball_Radius[Fireball.level - 1];
         Fireball.amount = fireball_Amount[Fireball.level - 1];
         Fireball.speed = fireball_Speed[Fireball.level - 1];
 
         IceShard = new Ability("Ice Shard", 1);
         IceShard.dps = iceShard_DPS[IceShard.level - 1];
+        IceShard.radius = iceShard_Radius[IceShard.level - 1];
         IceShard.amount = iceShard_Amount[IceShard.level - 1];
         IceShard.speed = iceShard_Speed[IceShard.level - 1];
 
         Lightning = new Ability("Lightning", 1);
         Lightning.dps = lightning_DPS[Lightning.level - 1];
+        Lightning.radius = lightning_Radius[Lightning.level - 1];
         Lightning.amount = lightning_Amount[Lightning.level - 1];
         Lightning.speed = lightning_Speed[Lightning.level - 1];
     }
