@@ -22,7 +22,7 @@ public class SpellShots : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0)
+        if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
             pointerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
