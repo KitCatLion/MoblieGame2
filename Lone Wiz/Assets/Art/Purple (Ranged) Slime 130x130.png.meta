@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Purple (Ranged) Slime 130x130_0: -4043886944368858433
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
