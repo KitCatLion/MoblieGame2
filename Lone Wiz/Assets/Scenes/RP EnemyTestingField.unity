@@ -320,8 +320,8 @@ MonoBehaviour:
   currentWave: 1
   totalEnemies: 0
   enemiesRemaining: 0
-  waveStartSound: {fileID: 0}
-  waveEndSound: {fileID: 0}
+  waveStartSound: {fileID: 8300000, guid: 7154f511894f61c4b82884fa12bc64ba, type: 3}
+  waveEndSound: {fileID: 8300000, guid: b22a3d6bc1e3650449398904d1dee62b, type: 3}
   enemySpawner: {fileID: 0}
 --- !u!4 &645256126
 Transform:
