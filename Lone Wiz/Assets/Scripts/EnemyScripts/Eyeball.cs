@@ -17,6 +17,8 @@ public class Eyeball : MonoBehaviour
     private Vector3 randomOffset;
     private float spasmTimer = 0f;
     private float spasmChangeTime = 0.5f;
+    public float maxHealth = 100f;
+    private float currentHealth;
 
     void Start()
     {
@@ -24,6 +26,7 @@ public class Eyeball : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = 4f;
         UpdateRandomOffset();
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -78,5 +81,35 @@ public class Eyeball : MonoBehaviour
                 fireTimer = 0f;
             }
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Fireball"))
+        {
+            TakeDamage(10f); // Fireball does least damage
+        }
+        else if (other.CompareTag("IceSpell"))
+        {
+            TakeDamage(20f); // Ice does more damage
+        }
+        else if (other.CompareTag("Lightning"))
+        {
+            TakeDamage(30f); // Lightning does the most damage
+        }
+    }
+
+    void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject); // Destroy enemy when health reaches zero
     }
 }
