@@ -18,6 +18,7 @@ public class Sheild : MonoBehaviour
         active = 5;
         coolDown = 15;
         coolTime = coolDown;
+        gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()
@@ -40,6 +41,7 @@ public class Sheild : MonoBehaviour
         if (on == true)
         {
             ++time;
+            coolTime = coolDown;
         }
         else
         {
