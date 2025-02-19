@@ -3,7 +3,7 @@ using UnityEngine;
 public class Ability : MonoBehaviour
 {
     private string Name;
-    private float Level, Dps, Radius, Amount, Speed;
+    private float Level, Dps, Radius, Amount, Speed, ActiveTime, Cooldown, DeathTime;
 
     /// <summary>
     /// An ability is upgrade by the user after death and evolve in strengh 
@@ -46,4 +46,21 @@ public class Ability : MonoBehaviour
         set { speed = value; }
     }
 
+    public float activeTime
+    {
+        get { return activeTime; }
+        set { activeTime = value; }
+    }
+
+    public float cooldown
+    {
+        get { return cooldown; }
+        set { cooldown = value; }
+    }
+
+    public float death
+    {
+        get { return death; }
+        set { death = value; }
+    }
 }

@@ -15,7 +15,7 @@ public class UpgradeSystem : MonoBehaviour
     public string readFileName;
     public string readDirectory;
 
-    Ability Fireball, IceShard, Lightning; 
+    Ability Fireball, IceShard, Lightning, Shield; //add shield
 
     #region Updrage Txt
     void WriteToFile(string file = "")
@@ -84,26 +84,32 @@ public class UpgradeSystem : MonoBehaviour
     #endregion
 
     #region Upgrades
-    //int fireball_Level = 1;       //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    float[] fireball_UpgradeCost =   {20,50,100,130,160,300,320,360,450,550,600,700,800};
+    //int fireball_Level = 1;    //1, 2, 3, 4,  5,  6,    7,  8,  9, 10, 11, 12, 13
+    float[] fireball_UpgradeCost =   {20,50,100,130,160,300,360,450,550,600,700,800};
     float[] fireball_DPS =       { 1, 2, 2, 2, 2, 2, 3, 3, 3,  4,  4,  4,  5};
     float[] fireball_Radius =    { 0.5f, 0.5f, 1f, 1f, 1f, 1f, 1.5f, 1.5f, 1.5f, 1.5f, 2f, 2f, 2f};
     float[] fireball_Amount =    { 1, 1, 1, 1, 2, 2, 2, 3, 3,  3,  4,  4,  4};
     float[] fireball_Speed =     { 1, 1, 2, 2, 2, 2, 3, 3, 3,  3,  4,  4,  4};
 
     //int iceShard_Level = 1;       //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    int[] iceShard_UpgradeCost =   { 20, 50, 100, 130, 160, 300, 320, 360, 450, 550, 600, 700, 800 };
+    int[] iceShard_UpgradeCost =   { 20, 50, 100, 130, 160, 300, 360, 450, 550, 600, 700, 800 };
     float[] iceShard_DPS =       { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
     float[] iceShard_Radius =    { 0.5f, 0.5f, 1f, 1f, 1f, 1f, 1.5f, 1.5f, 1.5f, 1.5f, 2f, 2f, 2f };
     float[] iceShard_Amount =    { 2, 2, 2, 4, 4, 4, 4, 4, 6, 6, 6, 6, 8 };
     float[] iceShard_Speed =     { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 };
 
     //int lightning_Level = 1;      //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    int[] lightning_UpgradeCost =  { 20, 50, 100, 130, 160, 300, 320, 360, 450, 550, 600, 700, 800 };
-    float[] lightning_DPS =      { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
-    float[] lightning_Radius =   { 2, 2, 4, 4, 4, 4, 6, 6, 6, 8, 8, 8, 10 };
-    float[] lightning_Amount =   { 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4 }; //Change later
-    float[] lightning_Speed =    { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 }; //Change later
+    int[] lightning_UpgradeCost =  { 20, 50, 100, 130, 160, 300, 360, 450, 550, 600, 700, 800 };
+    //float[] lightning_DPS =      { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
+    //float[] lightning_Radius =   { 2, 2, 4, 4, 4, 4, 6, 6, 6, 8, 8, 8, 10 };
+    //float[] lightning_Amount =   { 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4 }; //Change later
+    //float[] lightning_Speed =    { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 }; //Change later
+    float[] lightning_AmountTime = { 200, 150, 100};
+
+    //add shield ability
+    int[] shield_UpgradeCost = { 100, 400};
+    int[] shield_ActiveTime = { 5, 10, 15 };
+    int[] shield_Cooldown = { 15, 10, 5 };
     #endregion
 
     //int New_Level;
@@ -125,10 +131,13 @@ public class UpgradeSystem : MonoBehaviour
         IceShard.speed = iceShard_Speed[IceShard.level - 1];
 
         Lightning = new Ability("Lightning", 1);
-        Lightning.dps = lightning_DPS[Lightning.level - 1];
-        Lightning.radius = lightning_Radius[Lightning.level - 1];
-        Lightning.amount = lightning_Amount[Lightning.level - 1];
-        Lightning.speed = lightning_Speed[Lightning.level - 1];
+        //Lightning.activeTime = lightning_ActiveTime[Lightning.level - 1];
+
+
+        Shield = new Ability("Sheild", 1);
+        Shield.activeTime = shield_ActiveTime[Shield.level - 1];
+        Shield.cooldown = shield_Cooldown[Shield.level - 1];
+        
     }
 
     // Update is called once per frame
@@ -198,10 +207,27 @@ public class UpgradeSystem : MonoBehaviour
             Lightning.level++;
             score -= lightning_UpgradeCost[Lightning.level - 1];
 
-            Lightning.dps = lightning_DPS[Lightning.level - 1];
-            Lightning.radius = lightning_Radius[Lightning.level - 1];
-            Lightning.amount = lightning_Amount[Lightning.level - 1];
-            Lightning.speed = lightning_Speed[Lightning.level - 1];
+            //Lightning.dps = 
+        }
+        else
+        {
+            Debug.Log("Not enough Score...");
+        }
+    }
+    public void upgrade_Shield()
+    {
+        if (Shield.level >= shield_UpgradeCost.Length)
+        {
+            Debug.Log("Shield is Maxed out...");
+            return;
+        }
+        if (score >= shield_UpgradeCost[Shield.level - 1])
+        {
+            Shield.level++;
+            score -= shield_UpgradeCost[Shield.level - 1];
+
+            Shield.activeTime = shield_ActiveTime[Shield.level - 1];
+            Shield.cooldown = shield_Cooldown[Shield.level - 1];
         }
         else
         {
