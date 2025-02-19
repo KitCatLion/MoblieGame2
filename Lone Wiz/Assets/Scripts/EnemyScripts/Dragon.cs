@@ -63,11 +63,11 @@ public class Dragon : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Fireball"))
+        if (other.CompareTag("FireBall"))
         {
             TakeDamage(10f); // Fireball does least damage
         }
-        else if (other.CompareTag("IceSpell"))
+        else if (other.CompareTag("Ice"))
         {
             TakeDamage(20f); // Ice does more damage
         }

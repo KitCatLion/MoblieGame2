@@ -17,7 +17,7 @@ public class Eyeball : MonoBehaviour
     private Vector3 randomOffset;
     private float spasmTimer = 0f;
     private float spasmChangeTime = 0.5f;
-    public float maxHealth = 100f;
+    public float maxHealth = 75f;
     private float currentHealth;
 
     void Start()
@@ -85,11 +85,11 @@ public class Eyeball : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Fireball"))
+        if (other.CompareTag("FireBall"))
         {
             TakeDamage(10f); // Fireball does least damage
         }
-        else if (other.CompareTag("IceSpell"))
+        else if (other.CompareTag("Ice"))
         {
             TakeDamage(20f); // Ice does more damage
         }
