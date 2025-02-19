@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class Eyeball : MonoBehaviour
+public class Eyeball : BaseEnemy
 {
     public float shootingRange = 5f;
     public float keepDistance = 5f;

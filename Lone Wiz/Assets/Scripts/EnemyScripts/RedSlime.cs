@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedSlime : MonoBehaviour
+public class RedSlime : BaseEnemy
 {
     public float speed = 2f;
     public float stopDistance = 3f;

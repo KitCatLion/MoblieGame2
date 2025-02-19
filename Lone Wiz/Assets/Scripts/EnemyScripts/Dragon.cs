@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Dragon : MonoBehaviour
+public class Dragon : BaseEnemy
 {
     public float shootingRange = 7f;
     public float keepDistance = 5f;
