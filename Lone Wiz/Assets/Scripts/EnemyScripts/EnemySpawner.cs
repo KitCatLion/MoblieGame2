@@ -54,7 +54,11 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefab != null)
         {
             GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-            enemy.GetComponent<BaseEnemy>().Die();
+            BaseEnemy enemyScript = enemy.GetComponent<BaseEnemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.OnDeath += () => GameManager.Instance.EnemyDefeated();
+            }
             activeEnemies[enemyType]++;
             return true;
         }
