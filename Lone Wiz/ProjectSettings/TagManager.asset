@@ -9,6 +9,7 @@ TagManager:
   - Ice
   - Lightning
   - Walls
+  - enemy
   layers:
   - Default
   - TransparentFX

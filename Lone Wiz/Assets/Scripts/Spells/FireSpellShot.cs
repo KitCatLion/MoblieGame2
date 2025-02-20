@@ -15,7 +15,7 @@ public class SpellShots : MonoBehaviour
     Rigidbody2D rb;
     public Vector2 pos;
     public Vector2 speed;
-    public int waiting;
+    public float waiting;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,18 +27,18 @@ public class SpellShots : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        waiting++;
+        waiting += Time.deltaTime;
         if (Input.touchCount == 1)
         {
             touch = Input.GetTouch(0);
             pointerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (waiting >= 10 && Joystick.moving == false)
+            if (waiting >= 2 && Joystick.moving == false)
             {
                 NumFire(fireNum);
                 waiting = 0;
             }
         }
-        if(waiting > 30)
+        if(waiting > 10)
         {
             waiting = 0;
         }
