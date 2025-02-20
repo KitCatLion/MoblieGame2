@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         if (enemySpawner == null)
         {
-            Debug.LogError(" ERROR: EnemySpawner is NULL in GameManager!");
+            //Debug.LogError(" ERROR: EnemySpawner is NULL in GameManager!");
             yield break;
         }
 

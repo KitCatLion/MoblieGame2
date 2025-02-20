@@ -10,44 +10,66 @@ public class EnemySpawner : MonoBehaviour
     private Dictionary<string, int> maxEnemiesPerType;
     private Dictionary<string, int> activeEnemies;
 
-    void Start()
+    // Initialize dictionaries in Awake
+    void Awake()
     {
         maxEnemiesPerType = new Dictionary<string, int>
-{
-    { "GreenSlime", 10 }, { "RedSlime", 10 }, { "BlueSlime", 0 }, { "Eyeball", 3 }, { "Dragon", 0 }
-};
+        {
+            { "GreenSlime", 10 },
+            { "RedSlime", 10 },
+            { "BlueSlime", 0 },
+            { "Eyeball", 3 },
+            { "Dragon", 0 }
+        };
 
         activeEnemies = new Dictionary<string, int>
-{
-    { "GreenSlime", 0 }, { "RedSlime", 0 }, { "BlueSlime", 0 }, { "Eyeball", 0 }, { "Dragon", 0 }
-};
+        {
+            { "GreenSlime", 0 },
+            { "RedSlime", 0 },
+            { "BlueSlime", 0 },
+            { "Eyeball", 0 },
+            { "Dragon", 0 }
+        };
     }
 
     public int SpawnWave(int waveNumber)
     {
         int totalSpawned = 0;
 
+        //Debug.Log("Line 30!");
+
         AdjustEnemyLimits(waveNumber);
+
+        //Debug.Log("Line 34!");
 
         foreach (var enemyType in maxEnemiesPerType.Keys)
         {
             if (!maxEnemiesPerType.ContainsKey(enemyType))
             {
-                Debug.LogError($"Enemy type {enemyType} is missing from maxEnemiesPerType!");
+                //Debug.LogError($"Enemy type {enemyType} is missing from maxEnemiesPerType!");
                 continue;
             }
 
-            Debug.Log($"Spawning: {enemyType}, Max Allowed: {maxEnemiesPerType[enemyType]}");
+            int maxEnemies = maxEnemiesPerType[enemyType];
+            if (maxEnemies <= 0)
+            {
+                //Debug.Log($"Skipping {enemyType} since max allowed is 0.");
+                continue;
+            }
 
-            int spawnAmount = Random.Range(1, maxEnemiesPerType[enemyType]); // Line 32
+            //Debug.Log($"Spawning: {enemyType}, Max Allowed: {maxEnemies}");
+
+            // Adjust the range to ensure valid values
+            int spawnAmount = Random.Range(1, maxEnemies + 1); // Inclusive range
 
             for (int i = 0; i < spawnAmount; i++)
             {
                 if (SpawnEnemy(enemyType))
                     totalSpawned++;
             }
+            //Debug.Log("Line 53!");
         }
-
+        //Debug.Log("Line 63!");
         return totalSpawned;
     }
 
