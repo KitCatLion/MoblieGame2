@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (hp <= 0)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 }

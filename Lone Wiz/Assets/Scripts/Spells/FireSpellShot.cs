@@ -16,17 +16,21 @@ public class SpellShots : MonoBehaviour
     public Vector2 pos;
     public Vector2 speed;
     public float waiting;
+    public GameObject shield;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         fireSpeed = 1;
         fireNum = 1;
         waiting = 0;
+        shield.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        shield.transform.position = gameObject.transform.position;
         waiting += Time.deltaTime;
         if (Input.touchCount == 1)
         {
@@ -37,6 +41,14 @@ public class SpellShots : MonoBehaviour
                 NumFire(fireNum);
                 waiting = 0;
             }
+        }
+        else if (Input.touchCount == 2)
+        {
+            shield.SetActive(true);
+        }
+        else if(Input.touchCount == 0)
+        {
+            shield.SetActive(false);
         }
         if(waiting > 10)
         {

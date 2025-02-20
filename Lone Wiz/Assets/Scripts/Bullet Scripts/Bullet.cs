@@ -30,4 +30,11 @@ public class Bullet : MonoBehaviour
         float y = timer * speed * transform.right.y;
         return new Vector2(x + spawnPoint.x, y + spawnPoint.y);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Shield"))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
