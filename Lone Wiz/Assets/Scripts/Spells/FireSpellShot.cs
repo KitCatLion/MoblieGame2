@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SpellShots : MonoBehaviour
 {
     public GameObject fireBall;
-    public FloatingJoystick Joystick;
     public int fireNum = 1;
     Touch touch;
     public float fireSpeed;
@@ -15,9 +15,8 @@ public class SpellShots : MonoBehaviour
     Rigidbody2D rb;
     public Vector2 pos;
     public Vector2 speed;
-    public float waiting;
     public GameObject shield;
-
+    public float waiting;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,7 +35,7 @@ public class SpellShots : MonoBehaviour
         {
             touch = Input.GetTouch(0);
             pointerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (waiting >= 2 && Joystick.moving == false)
+            if (waiting >= 2)
             {
                 NumFire(fireNum);
                 waiting = 0;
@@ -46,11 +45,11 @@ public class SpellShots : MonoBehaviour
         {
             shield.SetActive(true);
         }
-        else if(Input.touchCount == 0)
+        else if (Input.touchCount == 0)
         {
             shield.SetActive(false);
         }
-        if(waiting > 10)
+        if (waiting > 10)
         {
             waiting = 0;
         }
