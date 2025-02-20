@@ -12,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        hp = 5;
         rb = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate()

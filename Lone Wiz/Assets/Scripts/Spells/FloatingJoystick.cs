@@ -11,6 +11,7 @@ public class FloatingJoystick : MonoBehaviour
     private Vector2 joystickTouchPos;
     private Vector2 joystickOriPos;
     private float joysickRadius;
+    public bool moving;
     private void Start()
     {
         joystickOriPos = joystickBG.transform.position;
@@ -21,6 +22,7 @@ public class FloatingJoystick : MonoBehaviour
         joystick.transform.position = Input.mousePosition;
         joystickBG.transform.position = Input.mousePosition;
         joystickTouchPos = Input.mousePosition;
+        moving = true;
     }
     public void Drag(BaseEventData based)
     {
@@ -42,5 +44,6 @@ public class FloatingJoystick : MonoBehaviour
         joystickVec = Vector2.zero;
         joystick.transform.position = joystickOriPos;
         joystickBG.transform.position = joystickOriPos;
+        moving = false;
     }
 }

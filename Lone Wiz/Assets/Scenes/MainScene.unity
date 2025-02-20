@@ -173,6 +173,7 @@ MonoBehaviour:
   joystick: {fileID: 1461028059}
   joystickBG: {fileID: 1872599256}
   joystickVec: {x: 0, y: 0}
+  moving: 0
 --- !u!114 &5584363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,7 +858,6 @@ GameObject:
   - component: {fileID: 842233577}
   - component: {fileID: 842233576}
   - component: {fileID: 842233575}
-  - component: {fileID: 842233574}
   - component: {fileID: 842233578}
   m_Layer: 0
   m_Name: shieldRadius
@@ -865,7 +865,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &842233573
 Transform:
   m_ObjectHideFlags: 0
@@ -881,28 +881,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1120025420}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &842233574
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842233572}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 25d449f94ca01b24281b908fa4ff5712, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &842233575
 Rigidbody2D:
   serializedVersion: 5
@@ -1034,9 +1012,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1120025413}
-  tapAmount: 0
   active: 0
+  tapAmount: 0
   coolDown: 0
+  time: 0
+  coolTime: 0
 --- !u!1 &969959003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1720,8 +1700,8 @@ GameObject:
   - component: {fileID: 1120025418}
   - component: {fileID: 1120025417}
   - component: {fileID: 1120025416}
-  - component: {fileID: 1120025415}
   - component: {fileID: 1120025414}
+  - component: {fileID: 1120025421}
   m_Layer: 0
   m_Name: Wiz
   m_TagString: Player
@@ -1759,24 +1739,6 @@ MonoBehaviour:
   time: 0
   amountTime: 0
   deathTime: 0
---- !u!114 &1120025415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120025413}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ef5edbf33b464b49bcf7dcb9450d9bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireBall: {fileID: 1385309561375887301, guid: 09f33c9d7d3a4ec44afc95dde7b63bcd, type: 3}
-  fireNum: 1
-  fireSpeed: 0
-  pointerPos: {x: 0, y: 0}
-  pos: {x: 0, y: 0}
-  speed: {x: 0, y: 0}
 --- !u!114 &1120025416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1927,6 +1889,26 @@ Transform:
   - {fileID: 842233573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1120025421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120025413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef5edbf33b464b49bcf7dcb9450d9bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireBall: {fileID: 1385309561375887301, guid: 09f33c9d7d3a4ec44afc95dde7b63bcd, type: 3}
+  Joystick: {fileID: 5584362}
+  fireNum: 1
+  fireSpeed: 0
+  pointerPos: {x: 0, y: 0}
+  pos: {x: 0, y: 0}
+  speed: {x: 0, y: 0}
+  waiting: 0
 --- !u!1 &1210679336
 GameObject:
   m_ObjectHideFlags: 0
