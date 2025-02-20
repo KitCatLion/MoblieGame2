@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Eyeball (Ranged) 130x210_0: 4145289398588682773
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Dragon (Ranged) Boss 200x275_0: -4026486185575621624
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
