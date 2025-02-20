@@ -33,6 +33,12 @@ public class GameManager : MonoBehaviour
 
     IEnumerator StartWave()
     {
+        if (enemySpawner == null)
+        {
+            //Debug.LogError(" ERROR: EnemySpawner is NULL in GameManager!");
+            yield break;
+        }
+
         audioSource.PlayOneShot(waveStartSound);
         enemiesRemaining = enemySpawner.SpawnWave(currentWave);
         yield return null;

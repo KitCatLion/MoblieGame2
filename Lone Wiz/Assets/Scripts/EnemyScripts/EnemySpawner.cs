@@ -4,22 +4,31 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject redSlimePrefab, blueSlimePrefab, eyeballPrefab, dragonPrefab;
+    public GameObject redSlimePrefab, blueSlimePrefab, eyeballPrefab, dragonPrefab, greenSlimePrefab;
     public Transform[] spawnPoints;
 
     private Dictionary<string, int> maxEnemiesPerType;
     private Dictionary<string, int> activeEnemies;
 
-    void Start()
+    // Initialize dictionaries in Awake
+    void Awake()
     {
         maxEnemiesPerType = new Dictionary<string, int>
         {
-            { "RedSlime", 10 }, { "BlueSlime", 0 }, { "Eyeball", 3 }, { "Dragon", 0 }
+            { "GreenSlime", 10 },
+            { "RedSlime", 10 },
+            { "BlueSlime", 0 },
+            { "Eyeball", 3 },
+            { "Dragon", 0 }
         };
 
         activeEnemies = new Dictionary<string, int>
         {
-            { "RedSlime", 0 }, { "BlueSlime", 0 }, { "Eyeball", 0 }, { "Dragon", 0 }
+            { "GreenSlime", 0 },
+            { "RedSlime", 0 },
+            { "BlueSlime", 0 },
+            { "Eyeball", 0 },
+            { "Dragon", 0 }
         };
     }
 
@@ -27,19 +36,40 @@ public class EnemySpawner : MonoBehaviour
     {
         int totalSpawned = 0;
 
+        //Debug.Log("Line 30!");
+
         AdjustEnemyLimits(waveNumber);
+
+        //Debug.Log("Line 34!");
 
         foreach (var enemyType in maxEnemiesPerType.Keys)
         {
-            int spawnAmount = Random.Range(1, maxEnemiesPerType[enemyType]);
+            if (!maxEnemiesPerType.ContainsKey(enemyType))
+            {
+                //Debug.LogError($"Enemy type {enemyType} is missing from maxEnemiesPerType!");
+                continue;
+            }
+
+            int maxEnemies = maxEnemiesPerType[enemyType];
+            if (maxEnemies <= 0)
+            {
+                //Debug.Log($"Skipping {enemyType} since max allowed is 0.");
+                continue;
+            }
+
+            //Debug.Log($"Spawning: {enemyType}, Max Allowed: {maxEnemies}");
+
+            // Adjust the range to ensure valid values
+            int spawnAmount = Random.Range(1, maxEnemies + 1); // Inclusive range
 
             for (int i = 0; i < spawnAmount; i++)
             {
                 if (SpawnEnemy(enemyType))
                     totalSpawned++;
             }
+            //Debug.Log("Line 53!");
         }
-
+        //Debug.Log("Line 63!");
         return totalSpawned;
     }
 
@@ -54,7 +84,11 @@ public class EnemySpawner : MonoBehaviour
         if (enemyPrefab != null)
         {
             GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
-            enemy.GetComponent<BaseEnemy>().Die();
+            BaseEnemy enemyScript = enemy.GetComponent<BaseEnemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.OnDeath += () => GameManager.Instance.EnemyDefeated();
+            }
             activeEnemies[enemyType]++;
             return true;
         }
@@ -64,8 +98,8 @@ public class EnemySpawner : MonoBehaviour
     void AdjustEnemyLimits(int wave)
     {
         if (wave >= 3) maxEnemiesPerType["Dragon"] = 1;
-        if (wave >= 6) maxEnemiesPerType["RedSlime"] = 0;
-        if (wave >= 6) maxEnemiesPerType["BlueSlime"] = 5;
+        if (wave >= 6) maxEnemiesPerType["GreenSlime"] = 0; // Remove Green Slime
+        if (wave >= 6) maxEnemiesPerType["BlueSlime"] = 5;  // Increase Blue Slimes
         if (wave >= 10) maxEnemiesPerType["Eyeball"] += 2;
     }
 
@@ -73,6 +107,7 @@ public class EnemySpawner : MonoBehaviour
     {
         switch (enemyType)
         {
+            case "GreenSlime": return greenSlimePrefab;
             case "RedSlime": return redSlimePrefab;
             case "BlueSlime": return blueSlimePrefab;
             case "Eyeball": return eyeballPrefab;
