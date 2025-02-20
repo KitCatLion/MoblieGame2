@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedSlime : MonoBehaviour
+public class RedSlime : BaseEnemy
 {
     public float speed = 2f;
     public float stopDistance = 3f;
@@ -12,10 +12,13 @@ public class RedSlime : MonoBehaviour
     private Transform player;
     private float fireTimer = 0f;
     private bool canShoot = false;
+    public float maxHealth = 50;
+    public float currentHealth;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -24,6 +27,7 @@ public class RedSlime : MonoBehaviour
         CheckShootingRange();
         AimAndShoot();
     }
+
 
     void MoveTowardsPlayer()
     {
@@ -70,6 +74,36 @@ public class RedSlime : MonoBehaviour
                 fireTimer = 0f;
             }
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("FireBall"))
+        {
+            TakeDamage(10f); // Fireball does least damage
+        }
+        else if (other.CompareTag("Ice"))
+        {
+            TakeDamage(20f); // Ice does more damage
+        }
+        else if (other.CompareTag("Lightning"))
+        {
+            TakeDamage(30f); // Lightning does the most damage
+        }
+    }
+
+    void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject); // Destroy enemy when health reaches zero
     }
 
     void OnDrawGizmos()
