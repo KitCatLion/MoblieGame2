@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SpellShots : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class SpellShots : MonoBehaviour
     Rigidbody2D rb;
     public Vector2 pos;
     public Vector2 speed;
+    public GameObject shield;
     public float waiting;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,6 +24,7 @@ public class SpellShots : MonoBehaviour
         fireSpeed = 1;
         fireNum = 1;
         waiting = 0;
+        shield.SetActive(false);
     }
 
     // Update is called once per frame
@@ -38,7 +41,15 @@ public class SpellShots : MonoBehaviour
                 waiting = 0;
             }
         }
-        if(waiting > 10)
+        else if (Input.touchCount == 2)
+        {
+            shield.SetActive(true);
+        }
+        else if (Input.touchCount == 0)
+        {
+            shield.SetActive(false);
+        }
+        if (waiting > 10)
         {
             waiting = 0;
         }
