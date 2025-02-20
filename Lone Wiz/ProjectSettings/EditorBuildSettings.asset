@@ -15,7 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Death.unity
     guid: 005892637137b0e4baac29d61eec6cf5
   m_configObjects:
-    com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 3ae13efd4a06c2646809021b7b26296a, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 54eda021394927a49bf37de650729298, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: ee26f1cdf696e7d469c111928bf23f5a, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: a409f04204bee984fb1b29a1f6ba82f0, type: 2}

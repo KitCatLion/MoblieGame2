@@ -8,6 +8,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class SpellShots : MonoBehaviour
 {
     public GameObject fireBall;
+    public FloatingJoystick Joystick;
     public int fireNum = 1;
     Touch touch;
     public float fireSpeed;
@@ -29,13 +30,12 @@ public class SpellShots : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shield.transform.position = gameObject.transform.position;
         waiting += Time.deltaTime;
         if (Input.touchCount == 1)
         {
             touch = Input.GetTouch(0);
             pointerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (waiting >= 2)
+            if (waiting >= 2 && Joystick.moving == false)
             {
                 NumFire(fireNum);
                 waiting = 0;
