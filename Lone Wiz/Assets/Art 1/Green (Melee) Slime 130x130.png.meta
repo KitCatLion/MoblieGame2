@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Green (Melee) Slime 130x130_0: 4737741276651235580
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
