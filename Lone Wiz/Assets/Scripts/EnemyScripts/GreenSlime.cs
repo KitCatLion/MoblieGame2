@@ -9,6 +9,8 @@ public class GreenSlime : BaseEnemy
     private Transform player;
     private float currentHealth;
 
+    public float stopDistance = 0.5f; // Minimum distance from the player
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -24,7 +26,13 @@ public class GreenSlime : BaseEnemy
     {
         if (player)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            float distance = Vector2.Distance(transform.position, player.position);
+
+            if (distance > stopDistance)
+            {
+                // Only move if further than the stopDistance
+                transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            }
         }
     }
 
