@@ -2,33 +2,57 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System;
+using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 public class SpellShots : MonoBehaviour
 {
     public GameObject fireBall;
+    public FloatingJoystick Joystick;
     public int fireNum = 1;
+    Touch touch;
     public float fireSpeed;
     public Vector2 pointerPos;
     Rigidbody2D rb;
     public Vector2 pos;
     public Vector2 speed;
+    public GameObject shield;
+    public float waiting;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         fireSpeed = 1;
         fireNum = 1;
+        waiting = 0;
+        shield.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        waiting += Time.deltaTime;
         if (Input.touchCount == 1)
         {
-            Touch touch = Input.GetTouch(0);
+            touch = Input.GetTouch(0);
             pointerPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            NumFire(fireNum);
+            if (waiting >= 2 && Joystick.moving == false)
+            {
+                NumFire(fireNum);
+                waiting = 0;
+            }
         }
-        
+        else if (Input.touchCount == 2)
+        {
+            shield.SetActive(true);
+        }
+        else if (Input.touchCount == 0)
+        {
+            shield.SetActive(false);
+        }
+        if (waiting > 10)
+        {
+            waiting = 0;
+        }
     }
     public void NowSpawn(Vector2 pos, Vector2 speed)
     {
