@@ -97,10 +97,29 @@ public class EnemySpawner : MonoBehaviour
 
     void AdjustEnemyLimits(int wave)
     {
-        if (wave >= 3) maxEnemiesPerType["Dragon"] = 1;
-        if (wave >= 6) maxEnemiesPerType["GreenSlime"] = 0; // Remove Green Slime
-        if (wave >= 6) maxEnemiesPerType["BlueSlime"] = 5;  // Increase Blue Slimes
-        if (wave >= 10) maxEnemiesPerType["Eyeball"] += 2;
+        if (wave < 3)
+        {
+            // Early waves: Only Green and Red Slimes
+            maxEnemiesPerType["GreenSlime"] = 10;
+            maxEnemiesPerType["RedSlime"] = 10;
+            maxEnemiesPerType["Eyeball"] = 0;  
+            maxEnemiesPerType["BlueSlime"] = 0;
+            maxEnemiesPerType["Dragon"] = 0;  
+        }
+        else if (wave >= 3)
+        {
+            maxEnemiesPerType["Eyeball"] = 3; // Introduce Eyeballs at Wave 3
+        }
+        if (wave >= 6)
+        {
+            maxEnemiesPerType["GreenSlime"] = 0; // Remove Green Slime
+            maxEnemiesPerType["BlueSlime"] = 5;  // Introduce Blue Slimes
+        }
+        if (wave >= 10)
+        {
+            maxEnemiesPerType["Eyeball"] += 2;  // Increase Eyeballs
+            maxEnemiesPerType["Dragon"] = 1;    // Introduce Dragons at Wave 10
+        }
     }
 
     GameObject GetEnemyPrefab(string enemyType)
