@@ -1,361 +1,148 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 //using UnityEngine.Windows;
 
 public class UpgradeSystem : MonoBehaviour
 {
-    //FileStream fs = null;
-    //StreamWriter sw = null;
+    public int score = 0;
 
-    //public string UpgradeTxt;
-    //public string uDirectory;
+    int x = 1;
 
-    //public string readFileName;
-    //public string readDirectory;
-
-    
-
-    #region Updrage Txtfile
-  //  void WriteToFile(string file = "")
-  //  {
-  //      print("received message write flat");
-  //      if (file != "")
-  //          UpgradeTxt = file;
-
-  //      if (!Directory.Exists(uDirectory))
-  //      {
-  //          Directory.CreateDirectory(uDirectory);
-  //          Debug.Log("A folder called " + uDirectory + " has been created.");
-  //      }
-
-  //      //Problem? Reuse streamwriter?
-  //      /*using(StreamWriter alt_sw = new StreamWriter(new FileStream(sDirectory + @"\Alt_" + sFileName, FileMode.CreateNew)))
-  ////using(StreamWriter alt_sw = new StreamWriter(sDirectory + @"\Alt_" + sFileName))
-  //{
-  //    for(int i = 0; i < stat.ScreenItemsName.Length; i++){
-  //        alt_sw.WriteLine(stat.ScreenItemsName[i] + ": " + stat.ScreenItemsValue[i].ToString());
-  //        //alt_sw.WriteLine(transform.position.x.ToString());
-  //        //alt_sw.WriteLine(transform.position.y.ToString());
-  //        //alt_sw.WriteLine(transform.position.z.ToString());
-  //    }
-  //}
-  // */
-
-
-  //      fs = new FileStream(uDirectory + @"\" + UpgradeTxt, FileMode.Create);
-
-  //      /*
-  //if(File.Exists(sDirectory + @"\" + sFileName))
-  //{
-  //    DeleteFile(sFileName);
-  //}
-  //*/
-
-  //      sw = new StreamWriter(fs);
-
-
-  //      sw.Flush();
-  //      sw.Close();
-  //  }
-  //  void ReadFile(string ability, int level, string file = "")
-  //  {
-  //      print("Reading Flat");
-  //      if (file != "")
-  //          readFileName = file;
-
-
-  //      using (StreamReader sr = new StreamReader(readDirectory + @"\" + readFileName))
-
-  //      {
-  //          //sr.readline() // read name, >, correct , , close <
-  //          while(sr.EndOfStream)
-  //          {
-  //              string line = sr.ReadLine();
-  //              if(line == ability)
-  //              {
-                    
-  //              }
-  //          }
-  //      }
-
-  //  }
+    #region Abilities
+    Ability Fireball = new Ability();
+    Ability IceShard = new Ability();
+    Ability Lightning = new Ability();
+    Ability Shield = new Ability();
     #endregion
-
+    List<Upgrade> upgrades = new List<Upgrade>();
     #region Upgrades
-    //int fireball_Level = 1;       //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    float[] fireball_UpgradeCost =   {20,50,100,130,160,300,320,360,450,550,600,700,800};
-    float[] fireball_DPS =       { 1, 2, 2, 2, 2, 2, 3, 3, 3,  4,  4,  4,  5};
-    float[] fireball_Radius =    { 0.5f, 0.5f, 1f, 1f, 1f, 1f, 1.5f, 1.5f, 1.5f, 1.5f, 2f, 2f, 2f};
-    float[] fireball_Amount =    { 1, 1, 1, 1, 2, 2, 2, 3, 3,  3,  4,  4,  4};
-    float[] fireball_Speed =     { 1, 1, 2, 2, 2, 2, 3, 3, 3,  3,  4,  4,  4};
+    //fire dps
+    Upgrade f_d1 = new Upgrade("Fireball", "dps", 2, 200);
+    Upgrade f_d2 = new Upgrade("Fireball", "dps", 3, 500);
+    Upgrade f_d3 = new Upgrade("Fireball", "dps", 4, 900);
+    Upgrade f_d4 = new Upgrade("Fireball", "dps", 5, 1300);
+    Upgrade f_d5 = new Upgrade("Fireball", "dps", 6, 1700);
+    //fire amount
+    Upgrade f_a1 = new Upgrade("Fireball", "amount", 2, 500);
+    Upgrade f_a2 = new Upgrade("Fireball", "amount", 3, 1000);
+    Upgrade f_a3 = new Upgrade("Fireball", "amount", 4, 1500);
+    Upgrade f_a4 = new Upgrade("Fireball", "amount", 5, 2000);
+    //fire speed
+    Upgrade f_s1 = new Upgrade("Fireball", "speed", 2, 200);
+    Upgrade f_s2 = new Upgrade("Fireball", "speed", 3, 700);
+    Upgrade f_s3 = new Upgrade("Fireball", "speed", 4, 1200);
 
-    //int iceShard_Level = 1;       //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    int[] iceShard_UpgradeCost =   { 20, 50, 100, 130, 160, 300, 320, 360, 450, 550, 600, 700, 800 };
-    float[] iceShard_DPS =       { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
-    float[] iceShard_Radius =    { 0.5f, 0.5f, 1f, 1f, 1f, 1f, 1.5f, 1.5f, 1.5f, 1.5f, 2f, 2f, 2f };
-    float[] iceShard_Amount =    { 2, 2, 2, 4, 4, 4, 4, 4, 6, 6, 6, 6, 8 };
-    float[] iceShard_Speed =     { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 };
+    //ice dps
+    Upgrade i_d1 = new Upgrade("IceShard", "dps", 2, 300);
+    Upgrade i_d2 = new Upgrade("IceShard", "dps", 3, 700);
+    Upgrade i_d3 = new Upgrade("IceShard", "dps", 4, 1300);
+    Upgrade i_d4 = new Upgrade("IceShard", "dps", 5, 1700);
+    Upgrade i_d5 = new Upgrade("IceShard", "dps", 6, 2100);
+    //ice amount
+    Upgrade i_a1 = new Upgrade("IceShard", "amount", 4, 400);
+    Upgrade i_a2 = new Upgrade("IceShard", "amount", 6, 800);
+    Upgrade i_a3 = new Upgrade("IceShard", "amount", 8, 1400);
+    //ice speed
+    Upgrade i_s1 = new Upgrade("IceShard", "speed", 2, 200);
+    Upgrade i_s2 = new Upgrade("IceShard", "speed", 3, 700);
+    Upgrade i_s3 = new Upgrade("IceShard", "speed", 4, 1200);
 
-    //int lightning_Level = 1;      //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
-    int[] lightning_UpgradeCost =  { 20, 50, 100, 130, 160, 300, 320, 360, 450, 550, 600, 700, 800 };
-    float[] lightning_DPS =      { 1, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
-    float[] lightning_Radius =   { 2, 2, 4, 4, 4, 4, 6, 6, 6, 8, 8, 8, 10 };
-    float[] lightning_Amount =   { 1, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4 }; //Change later
-    float[] lightning_Speed =    { 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4 }; //Change later
+    //light dps
+    Upgrade l_d1 = new Upgrade("Lightning", "dps", 2, 300);
+    Upgrade l_d2 = new Upgrade("Lightning", "dps", 3, 700);
+    Upgrade l_d3 = new Upgrade("Lightning", "dps", 4, 1300);
+    Upgrade l_d4 = new Upgrade("Lightning", "dps", 5, 1700);
+    Upgrade l_d5 = new Upgrade("Lightning", "dps", 6, 2100);
+    //light amount
+    Upgrade l_a1 = new Upgrade("Lightning", "amount", 2, 400);
+    Upgrade l_a2 = new Upgrade("Lightning", "amount", 3, 800);
+    Upgrade l_a3 = new Upgrade("Lightning", "amount", 4, 1400);
+    //ice speed
+    Upgrade l_s1 = new Upgrade("Lightning", "speed", 2, 200);
+    Upgrade l_s2 = new Upgrade("Lightning", "speed", 3, 700);
+    Upgrade l_s3 = new Upgrade("Lightning", "speed", 4, 1200);
     #endregion
-
-    //int New_Level;
-    //float New_Dps, New_Amount, New_Speed;
-    [SerializeField]
-    private float score;
-
-    List <Ability> abilities;
-    List<TextMeshProUGUI> Stats;
-
-    Ability Fire, Fira, Firaga, Blizzard, Blizzara, Blizzaga,
-        Thunder, Thundara, Thundaga, Shield;
-
-    public TextMeshProUGUI fire_t, fira_t, firaga_t, blizzard_t, blizzara_t, blizzaga_t,
-        thunder_t, thundara_t, thundaga_t, shield_t;
-
-    void upgradeAbility(string buttonName)
-    {
-        string[] temp = buttonName.Split("_");
-        string name = temp[0];
-        string upgrade = temp[1];
-        foreach(Ability ability in abilities)
-        {
-            if (ability.name == name)
-            {
-                if(upgrade.ToLower() == "dps")
-                {
-                    ability.DpsLvl++;
-                }
-                else if(upgrade.ToLower() == "amount")
-                {
-                    ability.AmountLvl++;
-                }
-                return;
-            }
-        }        
-    }
-
-    int[] cost = { 100, 200, 300 };
-
-    float[] fire_Dps = { 1f, 2f, 3f };
-    float[] fire_Amount = { 1f, 2f, 3f };
-
-    float[] fira_Dps = { 2f, 4f, 6f };
-    float[] fira_Amount = { 2f, 4f, 6f };
-
-    float[] firaga_Dps = { 3f, 6f, 9f };
-    float[] firaga_Amount = { 3f, 6f, 9f };
-
-    public void updateAbilities()
-    {
-        foreach(Ability ability in abilities)
-        {
-            switch (ability.name)
-            {
-                case "Fire":
-                    ability.DpsMaxLvl = fire_Dps.Length;
-                    ability.Dps = fire_Dps[ability.DpsLvl - 1];
-                    if (ability.DpsLvl == ability.DpsMaxLvl)
-                        ability.NextDps = fire_Dps[ability.DpsLvl].ToString();
-                    else ability.NextDps = "MAXED";
-                    ability.Amount = fire_Amount[ability.AmountLvl - 1];
-                    if (ability.AmountLvl == ability.AmountMaxLvl)
-                        ability.NextAmount = fire_Amount[ability.AmountLvl].ToString();
-                    else ability.NextAmount = "MAXED";
-                    break;
-                case "Fira":
-                    ability.DpsMaxLvl = fira_Dps.Length; //change
-                    ability.Dps = fira_Dps[ability.DpsLvl - 1]; //change
-                    if (ability.DpsLvl == ability.DpsMaxLvl)
-                        ability.NextDps = fira_Dps[ability.DpsLvl].ToString(); //change
-                    else ability.NextDps = "MAXED";
-                    ability.Amount = fira_Amount[ability.AmountLvl - 1]; //change
-                    if (ability.AmountLvl == ability.AmountMaxLvl)
-                        ability.NextAmount = fira_Amount[ability.AmountLvl].ToString(); //change
-                    else ability.NextAmount = "MAXED";
-                    break;
-                case "Firaga":
-                    ability.DpsMaxLvl = firaga_Dps.Length; //change
-                    ability.Dps = firaga_Dps[ability.DpsLvl - 1]; //change
-                    if (ability.DpsLvl == ability.DpsMaxLvl)
-                        ability.NextDps = firaga_Dps[ability.DpsLvl].ToString(); //change
-                    else ability.NextDps = "MAXED";
-                    ability.Amount = firaga_Amount[ability.AmountLvl - 1]; //change
-                    if (ability.AmountLvl == ability.AmountMaxLvl)
-                        ability.NextAmount = firaga_Amount[ability.AmountLvl].ToString(); //change
-                    else ability.NextAmount = "MAXED";
-                    break;
-            }
-
-        }
-    }
-
-    public void updateText() 
-    {
-        foreach (TextMeshProUGUI statTxt in Stats)
-        {
-            string[] text = statTxt.text.Split('\n');
-            string name = text[0];
-            foreach (Ability ability in abilities)
-            {
-                if (ability.name == name)
-                {
-                    string dps = "DPS: " + ability.Dps;
-                    string nextDps = "Next Lvl: " + ability.NextDps;
-                    string amount = "Amount: " + ability.Amount;
-                    string nextAmount = "Next Lvl: " + ability.NextAmount;
-                    statTxt.text = name + '\n' + dps + '\n' + nextDps 
-                        + '\n' + amount + '\n' + nextAmount;
-                    break;
-                }
-            }
-        }
-    }
     private void Start()
     {
-        Fire = new Ability("Fire");
-        Fira = new Ability("Fira");
-        Firaga = new Ability("Firaga");
-        //Blizzard = new Ability("Blizzard");
-        //Blizzara = new Ability("Blizzara");
-        //Blizzaga = new Ability("Blizzaga");
-        //Thunder = new Ability("Thunder");
-        //Thundara = new Ability("Thundara");
-        //Thundaga = new Ability("Thundaga");
+        upgrades.Add(f_d1);
+        upgrades.Add(f_d2);
+        upgrades.Add(f_d3);
+        upgrades.Add(f_d4);
+        upgrades.Add(f_d5);
+        upgrades.Add(f_a1);
+        upgrades.Add(f_a2);
+        upgrades.Add(f_a3);
+        upgrades.Add(f_a4);
+        upgrades.Add(f_s1);
+        upgrades.Add(f_s2);
+        upgrades.Add(f_s3);
 
-        abilities.Add(Fire);
-        abilities.Add(Fira);
-        abilities.Add(Firaga);
-        //abilities.Add(Blizzard);
-        //abilities.Add(Blizzara);
-        //abilities.Add(Blizzaga); 
-        //abilities.Add(Thunder);
-        //abilities.Add(Thundara); 
-        //abilities.Add(Thundaga);
+        upgrades.Add(i_d1);
+        upgrades.Add(i_d2);
+        upgrades.Add(i_d3);
+        upgrades.Add(i_d4);
+        upgrades.Add(i_d5);
+        upgrades.Add(i_a1);
+        upgrades.Add(i_a2);
+        upgrades.Add(i_a3);
+        upgrades.Add(i_s1);
+        upgrades.Add(i_s2);
+        upgrades.Add(i_s3);
 
-        Stats.Add(fire_t);
-        Stats.Add(fira_t);
-        Stats.Add(firaga_t);
-        //Stats.Add(blizzard_t);
-        //Stats.Add(blizzara_t);
-        //Stats.Add(blizzaga_t);
-        //Stats.Add(thunder_t);
-        //Stats.Add(thundara_t);
-        //Stats.Add(thundaga_t);
+        upgrades.Add(l_d1);
+        upgrades.Add(l_d2);
+        upgrades.Add(l_d3);
+        upgrades.Add(l_d4);
+        upgrades.Add(l_d5);
+        upgrades.Add(l_a1);
+        upgrades.Add(l_a2);
+        upgrades.Add(l_a3);
+        upgrades.Add(l_s1);
+        upgrades.Add(l_s2);
+        upgrades.Add(l_s3);
+        //Add all upgrades to list
     }
 
-    #region ButtonUI
-    public void upFire_button()
+    public void upgradeSelection()
     {
+        List<Upgrade> canAfford = new List<Upgrade>();
+        foreach(Upgrade upgrade in upgrades)
+        {
+            if(upgrade.Cost < score && upgrade.Cost > score - 300)
+            {
+                canAfford.Add(upgrade);
+            }
+        }
 
+
+        string finalStr = "Upgrade Options: " + x + " |";
+        for (int i = 0; i < 3; i++)
+        {
+            string s = "|";
+            foreach(Upgrade upgrade in canAfford)
+            {
+                s += upgrade.AbilityName + ", " + upgrade.UpgradeType + "->" +  upgrade.Change + ": " + upgrade.Cost.ToString() + "|";
+            }
+            Debug.Log(x + s);
+
+            int r = Random.Range(0, canAfford.Count);
+            Upgrade temp = canAfford[r];
+            string tempStr = temp.AbilityName + ": " + temp.Cost.ToString() + "|" ;
+            Debug.Log(x + "|" + temp.AbilityName + ", " + temp.UpgradeType + ": " + temp.Cost.ToString());
+            finalStr += tempStr;
+            canAfford.RemoveAt(r);
+        }
+
+        Debug.Log(finalStr);
+        x++;
+
+        
+        //Check if any values in canAfford list, and the random roll aspect. 
+        //Debug.Log(canAfford.ToArray().Length);
+        //int r = Random.Range(1, canAfford.Count);
+        //Upgrade temp = canAfford[r];
+        //Debug.Log(temp.AbilityName + ": " + temp.Cost.ToString());
+        
     }
-    #endregion
-
-
-
-    //void Start()
-    //{        
-    //    //Fireball = new Ability("Fireball", 1);
-    //    //Fireball.dps = fireball_DPS[Fireball.level - 1];
-    //    //Fireball.radius = fireball_Radius[Fireball.level - 1];
-    //    //Fireball.amount = fireball_Amount[Fireball.level - 1];
-    //    //Fireball.speed = fireball_Speed[Fireball.level - 1];
-
-    //    //IceShard = new Ability("Ice Shard", 1);
-    //    //IceShard.dps = iceShard_DPS[IceShard.level - 1];
-    //    //IceShard.radius = iceShard_Radius[IceShard.level - 1];
-    //    //IceShard.amount = iceShard_Amount[IceShard.level - 1];
-    //    //IceShard.speed = iceShard_Speed[IceShard.level - 1];
-
-    //    //Lightning = new Ability("Lightning", 1);
-    //    //Lightning.dps = lightning_DPS[Lightning.level - 1];
-    //    //Lightning.radius = lightning_Radius[Lightning.level - 1];
-    //    //Lightning.amount = lightning_Amount[Lightning.level - 1];
-    //    //Lightning.speed = lightning_Speed[Lightning.level - 1];
-    //}
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        //reset temps
-        //New_Level = 0;
-        //New_Dps = 0;
-        //New_Amount = 0;
-        //New_Speed = 0;
-    }
-    //public void upgrade_Fireball()
-    //{
-    //    if (Fireball.level >= 13)
-    //    {
-    //        Debug.Log("Fireball is Maxed out...");
-    //        return;
-    //    }
-    //    if (score >= fireball_UpgradeCost[Fireball.level - 1])
-    //    {
-    //        Fireball.level++;
-    //        score -= fireball_UpgradeCost[Fireball.level - 1];
-
-    //        Fireball.dps = fireball_DPS[Fireball.level - 1];
-    //        Fireball.radius = fireball_Radius[Fireball.level - 1];
-    //        Fireball.amount = fireball_Amount[Fireball.level - 1];
-    //        Fireball.speed = fireball_Speed[Fireball.level - 1];
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Not enough Score...");
-    //    }
-    //}
-
-    //public void upgrade_IceShard()
-    //{
-    //    if (IceShard.level >= 13)
-    //    {
-    //        Debug.Log("Ice Shard is Maxed out...");
-    //        return;
-    //    }
-    //    if (score >= iceShard_UpgradeCost[IceShard.level - 1])
-    //    {
-    //        IceShard.level++;
-    //        score -= iceShard_UpgradeCost[IceShard.level - 1];
-
-    //        IceShard.dps = iceShard_DPS[IceShard.level - 1];
-    //        IceShard.radius = iceShard_Radius[IceShard.level - 1];
-    //        IceShard.amount = iceShard_Amount[IceShard.level - 1];
-    //        IceShard.speed = iceShard_Speed[IceShard.level - 1];
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Not enough Score...");
-    //    }
-    //}
-
-    //public void upgrade_Lightning()
-    //{
-    //    if (Lightning.level >= 13)
-    //    {
-    //        Debug.Log("Lightning is Maxed out...");
-    //        return;
-    //    }
-    //    if (score >= lightning_UpgradeCost[Lightning.level - 1])
-    //    {
-    //        Lightning.level++;
-    //        score -= lightning_UpgradeCost[Lightning.level - 1];
-
-    //        Lightning.dps = lightning_DPS[Lightning.level - 1];
-    //        Lightning.radius = lightning_Radius[Lightning.level - 1];
-    //        Lightning.amount = lightning_Amount[Lightning.level - 1];
-    //        Lightning.speed = lightning_Speed[Lightning.level - 1];
-    //    }
-    //    else
-    //    {
-    //        Debug.Log("Not enough Score...");
-    //    }
-    //}
 }
