@@ -172,15 +172,7 @@ public class UpgradeSystem : MonoBehaviour
             //Debug.Log(finalStr);
             Debug.Log("Wave " + wave + " | " + choiceTxt[0] + " | " + choiceTxt[1] + " | " + choiceTxt[2] + " |");
 
-            //string help = "";
-            //foreach(Upgrade upgrade in upgradeChoices)
-            //{
-            //    help += upgrade.AbilityName + "," + upgrade.UpgradeType + "|";
-            //}
-            //Debug.Log(help);
             setUpgradeUI(choiceTxt);
-
-            //choiceTxt[0] = null; choiceTxt[1] = null; choiceTxt[2] = null;
         }
         else
         {
@@ -207,62 +199,76 @@ public class UpgradeSystem : MonoBehaviour
         }
     }
 
-    public void clearUI()
-    {
-        option1 = null;
-        option2 = null;
-        option3 = null;
-        
-    }
-
     public void selectInput(string str)
     {
+        /*
+         * Use foreach to find the ID of the selected upgrade.
+         * Use foreach to then remove the ID in the list that matches 
+         */
         Upgrade selected;
         switch (str)
         {
             case "1":
                 selected = upgradeChoices[0];
-                int x = upgrades.IndexOf(selected); //completely bugged, always returns 0 //add list to array so can pick out the exact element to delete...
-                Debug.Log(x + ". " + upgrades[x].AbilityName + "," + upgrades[x].UpgradeType);
-                Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
-                    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
+                //int x = upgrades.IndexOf(selected); //completely bugged, always returns 0 //add list to array so can pick out the exact element to delete...
+                //Debug.Log(x + ". " + upgrades[x].AbilityName + "," + upgrades[x].UpgradeType);
+                //Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
+                //    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
 
-                upgrades.RemoveAt(x);
-                upgradeChoices.Clear();
-                clearUI();
-                UI.updateOptionTxt();
-                
+                //upgrades.RemoveAt(x);
+                removeFromList(selected);
+                //clearUI();
                 break;
             case "2":
                 selected = upgradeChoices[1];
-                int y = upgrades.IndexOf(selected);
-                Debug.Log(y + ". " + upgrades[y].AbilityName + "," + upgrades[y].UpgradeType);
-                Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
-                    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
+                //int y = upgrades.IndexOf(selected);
+                //Debug.Log(y + ". " + upgrades[y].AbilityName + "," + upgrades[y].UpgradeType);
+                //Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
+                //    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
 
-                upgrades.RemoveAt(y);
-                upgradeChoices.Clear();
-                clearUI();
-                UI.updateOptionTxt();
-
+                //upgrades.RemoveAt(y);
+                removeFromList(selected);
+                //clearUI();
                 break; 
             case "3":
                 selected = upgradeChoices[2];
-                int z = upgrades.IndexOf(selected);
-                Debug.Log(z + ". " + upgrades[z].AbilityName + "," + upgrades[z].UpgradeType);
-                Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
-                    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
+                //int z = upgrades.IndexOf(selected);
+                //Debug.Log(z + ". " + upgrades[z].AbilityName + "," + upgrades[z].UpgradeType);
+                //Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
+                //    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
 
-                upgrades.RemoveAt(z);
-                upgradeChoices.Clear();
-                clearUI();
-                UI.updateOptionTxt();
-
+                //upgrades.RemoveAt(z);
+                removeFromList(selected);
+                //clearUI();
                 break;
         }
         
     }
 
+    public void removeFromList(Upgrade selected)
+    {
+        //Match selected ID to remove from main list of upgrades...
+        foreach(Upgrade upgrade in upgrades)
+        {
+            if (upgrade.ID == selected.ID)
+            {
+                upgrades.Remove(upgrade);
+                Debug.Log("Removing|" + upgrade.displayAll());
+                clearUI();
+                return;
+            }
+        }
+        
+    }
+    public void clearUI()
+        {
+            option1 = null;
+            option2 = null;
+            option3 = null;
+
+            upgradeChoices.Clear();
+            UI.updateOptionTxt();
+        }
     /*
      * ----Notes-----
      * Button UI includes: selection of upgrade for each button, button txt has to be ablt to change
