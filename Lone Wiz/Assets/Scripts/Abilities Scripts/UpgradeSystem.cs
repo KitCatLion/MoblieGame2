@@ -129,6 +129,7 @@ public class UpgradeSystem : MonoBehaviour
          * Then randomly selects 3 from the upgrades remaining to present to the player...
          */
         List<Upgrade> canAfford = new List<Upgrade>();
+        Debug.Log(upgrades.Count);
         foreach (Upgrade upgrade in upgrades)
         {
             if (upgrade.Cost <= score) //&& upgrade.Cost > score - 400 //Shouldn't need as the player will need to upgrade as game progresses or they will lose, shouldn't be saving up score.
@@ -136,22 +137,20 @@ public class UpgradeSystem : MonoBehaviour
                 canAfford.Add(upgrade);
             }
         }
-
-        if (canAfford.Count > 1) //must be able to afford one upgrade to show anything...
+        Debug.Log("Wave " + wave + " | Amount of Avaliable Upgrades: " + canAfford.Count + " | Score: " + score);
+        if (canAfford.Count > 0) //must be able to afford one upgrade to show anything...
         {
             //string finalStr = "Upgrade Options " + wave + ": |";
-            Debug.Log("Wave " + wave + " | Amount of Avaliable Upgrades: " + canAfford.Count + " | Score: " + score);
 
             int maxChoices = 3;
             string[] choiceTxt = new string[maxChoices+1]; // +1 so code doesn't flake out for some reason
             for (int i = 0; i < maxChoices; i++)
             {
-                if (i > maxChoices-1)
+                if(canAfford.Count == 0)
                 {
+                    Debug.Log("hapy");
                     break;
                 }
-                    
-
                 /*string s = "|";
                 //foreach(Upgrade upgrade in canAfford)
                 //{
@@ -160,18 +159,28 @@ public class UpgradeSystem : MonoBehaviour
                 int r = Random.Range(0, canAfford.Count);
                 //Debug.Log("Wave " + wave + " | " + r + " | " + canAfford.Count + " | " + i);
                 Upgrade temp = canAfford[r];
-                string tempStr = i+1 + ") " + temp.AbilityName + " \n" + temp.Cost.ToString();
+                string tempStr = i+1 + ") " + temp.AbilityName + " " + temp.Cost.ToString();
                 //Debug.Log(x + "|" + temp.AbilityName + ", " + temp.UpgradeType + ": " + temp.Cost.ToString());
 
                 choiceTxt[i] = tempStr;
                 //finalStr += tempStr + "|";
 
                 upgradeChoices.Add(temp);
+                
                 canAfford.RemoveAt(r);
             }
             //Debug.Log(finalStr);
             Debug.Log("Wave " + wave + " | " + choiceTxt[0] + " | " + choiceTxt[1] + " | " + choiceTxt[2] + " |");
+
+            //string help = "";
+            //foreach(Upgrade upgrade in upgradeChoices)
+            //{
+            //    help += upgrade.AbilityName + "," + upgrade.UpgradeType + "|";
+            //}
+            //Debug.Log(help);
             setUpgradeUI(choiceTxt);
+
+            //choiceTxt[0] = null; choiceTxt[1] = null; choiceTxt[2] = null;
         }
         else
         {
@@ -203,6 +212,7 @@ public class UpgradeSystem : MonoBehaviour
         option1 = null;
         option2 = null;
         option3 = null;
+        
     }
 
     public void selectInput(string str)
@@ -212,7 +222,8 @@ public class UpgradeSystem : MonoBehaviour
         {
             case "1":
                 selected = upgradeChoices[0];
-                int x = upgrades.IndexOf(selected);
+                int x = upgrades.IndexOf(selected); //completely bugged, always returns 0 //add list to array so can pick out the exact element to delete...
+                Debug.Log(x + ". " + upgrades[x].AbilityName + "," + upgrades[x].UpgradeType);
                 Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
                     + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
 
@@ -225,6 +236,7 @@ public class UpgradeSystem : MonoBehaviour
             case "2":
                 selected = upgradeChoices[1];
                 int y = upgrades.IndexOf(selected);
+                Debug.Log(y + ". " + upgrades[y].AbilityName + "," + upgrades[y].UpgradeType);
                 Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
                     + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
 
@@ -237,6 +249,7 @@ public class UpgradeSystem : MonoBehaviour
             case "3":
                 selected = upgradeChoices[2];
                 int z = upgrades.IndexOf(selected);
+                Debug.Log(z + ". " + upgrades[z].AbilityName + "," + upgrades[z].UpgradeType);
                 Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
                     + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
 
