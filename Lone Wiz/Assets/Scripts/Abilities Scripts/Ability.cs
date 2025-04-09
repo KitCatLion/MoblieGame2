@@ -4,7 +4,7 @@ public class Ability : MonoBehaviour
 {
     public int Dps { get; set; }
     public int Amount { get; set; }
-    public int Speed { get; set; }
+    public float Speed { get; set; }
 
     /// <summary>
     /// An ability is upgrade by the user after death and evolve in strengh 
@@ -15,7 +15,7 @@ public class Ability : MonoBehaviour
     {
         Dps = 1;
         Amount = 1;
-        Speed = 1;
+        Speed = 2f;
     }
 
 }

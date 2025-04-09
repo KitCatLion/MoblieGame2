@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 //using UnityEngine.Windows;
@@ -7,7 +9,9 @@ public class UpgradeSystem : MonoBehaviour
 {
     public int score = 0;
 
-    int x = 1;
+    int wave = 1;
+    public string option1, option2, option3;
+    public UpgradeUI_Txt UI;
 
     #region Abilities
     Ability Fireball = new Ability();
@@ -55,16 +59,22 @@ public class UpgradeSystem : MonoBehaviour
     Upgrade l_d4 = new Upgrade("Lightning", "dps", 5, 1700);
     Upgrade l_d5 = new Upgrade("Lightning", "dps", 6, 2100);
     //light amount
-    Upgrade l_a1 = new Upgrade("Lightning", "amount", 2, 400);
-    Upgrade l_a2 = new Upgrade("Lightning", "amount", 3, 800);
-    Upgrade l_a3 = new Upgrade("Lightning", "amount", 4, 1400);
+    Upgrade l_a1 = new Upgrade("Lightning", "amount", 150, 400);
+    Upgrade l_a2 = new Upgrade("Lightning", "amount", 100, 800);
     //ice speed
-    Upgrade l_s1 = new Upgrade("Lightning", "speed", 2, 200);
-    Upgrade l_s2 = new Upgrade("Lightning", "speed", 3, 700);
-    Upgrade l_s3 = new Upgrade("Lightning", "speed", 4, 1200);
+    Upgrade l_s1 = new Upgrade("Lightning", "speed", 1.5f, 200);
+    Upgrade l_s2 = new Upgrade("Lightning", "speed", 1, 700);
     #endregion
+    List<Upgrade> upgradeChoices = new List<Upgrade>();
     private void Start()
     {
+        resetUpgrades();
+    }
+    private void resetUpgrades()
+    {
+        upgrades.Clear();
+        upgradeChoices.Clear();
+
         upgrades.Add(f_d1);
         upgrades.Add(f_d2);
         upgrades.Add(f_d3);
@@ -97,52 +107,152 @@ public class UpgradeSystem : MonoBehaviour
         upgrades.Add(l_d5);
         upgrades.Add(l_a1);
         upgrades.Add(l_a2);
-        upgrades.Add(l_a3);
         upgrades.Add(l_s1);
         upgrades.Add(l_s2);
-        upgrades.Add(l_s3);
+
         //Add all upgrades to list
     }
-
-    public void upgradeSelection()
+    public void upgradePanel()
     {
+        /*
+         * Before open upgrade UI, run this method to update and set all UI elements
+         */
+
+        newUpgradeSelection(); //select upgrade options
+
+
+    }
+    public void newUpgradeSelection()
+    {
+        /*
+         * Takes remaining upgrades and the player's score to seperate which upgrades the player can afford...
+         * Then randomly selects 3 from the upgrades remaining to present to the player...
+         */
         List<Upgrade> canAfford = new List<Upgrade>();
-        foreach(Upgrade upgrade in upgrades)
+        foreach (Upgrade upgrade in upgrades)
         {
-            if(upgrade.Cost < score && upgrade.Cost > score - 300)
+            if (upgrade.Cost <= score) //&& upgrade.Cost > score - 400 //Shouldn't need as the player will need to upgrade as game progresses or they will lose, shouldn't be saving up score.
             {
                 canAfford.Add(upgrade);
             }
         }
 
-
-        string finalStr = "Upgrade Options: " + x + " |";
-        for (int i = 0; i < 3; i++)
+        if (canAfford.Count > 1) //must be able to afford one upgrade to show anything...
         {
-            string s = "|";
-            foreach(Upgrade upgrade in canAfford)
+            //string finalStr = "Upgrade Options " + wave + ": |";
+            Debug.Log("Wave " + wave + " | Amount of Avaliable Upgrades: " + canAfford.Count + " | Score: " + score);
+
+            int maxChoices = 3;
+            string[] choiceTxt = new string[maxChoices+1]; // +1 so code doesn't flake out for some reason
+            for (int i = 0; i < maxChoices; i++)
             {
-                s += upgrade.AbilityName + ", " + upgrade.UpgradeType + "->" +  upgrade.Change + ": " + upgrade.Cost.ToString() + "|";
+                if (i > maxChoices-1)
+                {
+                    break;
+                }
+                    
+
+                /*string s = "|";
+                //foreach(Upgrade upgrade in canAfford)
+                //{
+                //    s += upgrade.AbilityName + ", " + upgrade.UpgradeType + "->" +  upgrade.Change + ": " + upgrade.Cost.ToString() + "|";
+                */
+                int r = Random.Range(0, canAfford.Count);
+                //Debug.Log("Wave " + wave + " | " + r + " | " + canAfford.Count + " | " + i);
+                Upgrade temp = canAfford[r];
+                string tempStr = i+1 + ") " + temp.AbilityName + " \n" + temp.Cost.ToString();
+                //Debug.Log(x + "|" + temp.AbilityName + ", " + temp.UpgradeType + ": " + temp.Cost.ToString());
+
+                choiceTxt[i] = tempStr;
+                //finalStr += tempStr + "|";
+
+                upgradeChoices.Add(temp);
+                canAfford.RemoveAt(r);
             }
-            Debug.Log(x + s);
-
-            int r = Random.Range(0, canAfford.Count);
-            Upgrade temp = canAfford[r];
-            string tempStr = temp.AbilityName + ": " + temp.Cost.ToString() + "|" ;
-            Debug.Log(x + "|" + temp.AbilityName + ", " + temp.UpgradeType + ": " + temp.Cost.ToString());
-            finalStr += tempStr;
-            canAfford.RemoveAt(r);
+            //Debug.Log(finalStr);
+            Debug.Log("Wave " + wave + " | " + choiceTxt[0] + " | " + choiceTxt[1] + " | " + choiceTxt[2] + " |");
+            setUpgradeUI(choiceTxt);
         }
+        else
+        {
+            Debug.Log("Wave " + wave + " | " + "Cannot Afford Any Upgrades...");
+        }
+        wave++;
+        UI.updateOptionTxt();
+    }
 
-        Debug.Log(finalStr);
-        x++;
+    public void setUpgradeUI(string[] str)
+    {
+        option1 = null; option2 = null; option3 = null;
+        if (!string.IsNullOrEmpty(str[0])) 
+        {
+            option1 = str[0];
+        }
+        if (!string.IsNullOrEmpty(str[1]))
+        {
+            option2 = str[1];
+        }
+        if (!string.IsNullOrEmpty(str[2]))
+        {
+            option3 = str[2];
+        }
+    }
 
-        
-        //Check if any values in canAfford list, and the random roll aspect. 
-        //Debug.Log(canAfford.ToArray().Length);
-        //int r = Random.Range(1, canAfford.Count);
-        //Upgrade temp = canAfford[r];
-        //Debug.Log(temp.AbilityName + ": " + temp.Cost.ToString());
+    public void clearUI()
+    {
+        option1 = null;
+        option2 = null;
+        option3 = null;
+    }
+
+    public void selectInput(string str)
+    {
+        Upgrade selected;
+        switch (str)
+        {
+            case "1":
+                selected = upgradeChoices[0];
+                int x = upgrades.IndexOf(selected);
+                Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
+                    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
+
+                upgrades.RemoveAt(x);
+                upgradeChoices.Clear();
+                clearUI();
+                UI.updateOptionTxt();
+                
+                break;
+            case "2":
+                selected = upgradeChoices[1];
+                int y = upgrades.IndexOf(selected);
+                Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
+                    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
+
+                upgrades.RemoveAt(y);
+                upgradeChoices.Clear();
+                clearUI();
+                UI.updateOptionTxt();
+
+                break; 
+            case "3":
+                selected = upgradeChoices[2];
+                int z = upgrades.IndexOf(selected);
+                Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
+                    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
+
+                upgrades.RemoveAt(z);
+                upgradeChoices.Clear();
+                clearUI();
+                UI.updateOptionTxt();
+
+                break;
+        }
         
     }
+
+    /*
+     * ----Notes-----
+     * Button UI includes: selection of upgrade for each button, button txt has to be ablt to change
+     * What I need: Methods that can return upgrade name and txt....
+     */
 }
