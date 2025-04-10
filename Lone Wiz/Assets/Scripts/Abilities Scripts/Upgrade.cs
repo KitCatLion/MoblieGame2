@@ -13,13 +13,14 @@ public class Upgrade : MonoBehaviour
     public int Cost { get; set; }
     public Upgrade(string name, string type, float change, int cost)
     {
+        
+        counter = counter + 1;
         ID = counter;
         AbilityName = name;
         UpgradeType = type;
         Change = change;
         Cost = cost;
-
-        counter++;
+        Debug.Log(displayAll());
     }
 
     public string displayAll()

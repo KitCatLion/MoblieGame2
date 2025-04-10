@@ -20,60 +20,61 @@ public class UpgradeSystem : MonoBehaviour
     Ability Shield = new Ability();
     #endregion
     List<Upgrade> upgrades = new List<Upgrade>();
-    #region Upgrades
-    //fire dps
-    Upgrade f_d1 = new Upgrade("Fireball", "dps", 2, 200);
-    Upgrade f_d2 = new Upgrade("Fireball", "dps", 3, 500);
-    Upgrade f_d3 = new Upgrade("Fireball", "dps", 4, 900);
-    Upgrade f_d4 = new Upgrade("Fireball", "dps", 5, 1300);
-    Upgrade f_d5 = new Upgrade("Fireball", "dps", 6, 1700);
-    //fire amount
-    Upgrade f_a1 = new Upgrade("Fireball", "amount", 2, 500);
-    Upgrade f_a2 = new Upgrade("Fireball", "amount", 3, 1000);
-    Upgrade f_a3 = new Upgrade("Fireball", "amount", 4, 1500);
-    Upgrade f_a4 = new Upgrade("Fireball", "amount", 5, 2000);
-    //fire speed
-    Upgrade f_s1 = new Upgrade("Fireball", "speed", 2, 200);
-    Upgrade f_s2 = new Upgrade("Fireball", "speed", 3, 700);
-    Upgrade f_s3 = new Upgrade("Fireball", "speed", 4, 1200);
-
-    //ice dps
-    Upgrade i_d1 = new Upgrade("IceShard", "dps", 2, 300);
-    Upgrade i_d2 = new Upgrade("IceShard", "dps", 3, 700);
-    Upgrade i_d3 = new Upgrade("IceShard", "dps", 4, 1300);
-    Upgrade i_d4 = new Upgrade("IceShard", "dps", 5, 1700);
-    Upgrade i_d5 = new Upgrade("IceShard", "dps", 6, 2100);
-    //ice amount
-    Upgrade i_a1 = new Upgrade("IceShard", "amount", 4, 400);
-    Upgrade i_a2 = new Upgrade("IceShard", "amount", 6, 800);
-    Upgrade i_a3 = new Upgrade("IceShard", "amount", 8, 1400);
-    //ice speed
-    Upgrade i_s1 = new Upgrade("IceShard", "speed", 2, 200);
-    Upgrade i_s2 = new Upgrade("IceShard", "speed", 3, 700);
-    Upgrade i_s3 = new Upgrade("IceShard", "speed", 4, 1200);
-
-    //light dps
-    Upgrade l_d1 = new Upgrade("Lightning", "dps", 2, 300);
-    Upgrade l_d2 = new Upgrade("Lightning", "dps", 3, 700);
-    Upgrade l_d3 = new Upgrade("Lightning", "dps", 4, 1300);
-    Upgrade l_d4 = new Upgrade("Lightning", "dps", 5, 1700);
-    Upgrade l_d5 = new Upgrade("Lightning", "dps", 6, 2100);
-    //light amount
-    Upgrade l_a1 = new Upgrade("Lightning", "amount", 150, 400);
-    Upgrade l_a2 = new Upgrade("Lightning", "amount", 100, 800);
-    //ice speed
-    Upgrade l_s1 = new Upgrade("Lightning", "speed", 1.5f, 200);
-    Upgrade l_s2 = new Upgrade("Lightning", "speed", 1, 700);
-    #endregion
+    
     List<Upgrade> upgradeChoices = new List<Upgrade>();
-    private void Start()
+    private void Awake()
     {
         resetUpgrades();
+        Debug.Log("Total Upgrades: " + upgrades.Count);
     }
     private void resetUpgrades()
     {
         upgrades.Clear();
         upgradeChoices.Clear();
+
+        //fire dps
+        Upgrade f_d1 = new Upgrade("Fireball", "dps", 2, 200);
+        Upgrade f_d2 = new Upgrade("Fireball", "dps", 3, 500);
+        Upgrade f_d3 = new Upgrade("Fireball", "dps", 4, 900);
+        Upgrade f_d4 = new Upgrade("Fireball", "dps", 5, 1300);
+        Upgrade f_d5 = new Upgrade("Fireball", "dps", 6, 1700);
+        //fire amount
+        Upgrade f_a1 = new Upgrade("Fireball", "amount", 2, 500);
+        Upgrade f_a2 = new Upgrade("Fireball", "amount", 3, 1000);
+        Upgrade f_a3 = new Upgrade("Fireball", "amount", 4, 1500);
+        Upgrade f_a4 = new Upgrade("Fireball", "amount", 5, 2000);
+        //fire speed
+        Upgrade f_s1 = new Upgrade("Fireball", "speed", 2, 200);
+        Upgrade f_s2 = new Upgrade("Fireball", "speed", 3, 700);
+        Upgrade f_s3 = new Upgrade("Fireball", "speed", 4, 1200);
+
+        //ice dps
+        Upgrade i_d1 = new Upgrade("IceShard", "dps", 2, 300);
+        Upgrade i_d2 = new Upgrade("IceShard", "dps", 3, 700);
+        Upgrade i_d3 = new Upgrade("IceShard", "dps", 4, 1300);
+        Upgrade i_d4 = new Upgrade("IceShard", "dps", 5, 1700);
+        Upgrade i_d5 = new Upgrade("IceShard", "dps", 6, 2100);
+        //ice amount
+        Upgrade i_a1 = new Upgrade("IceShard", "amount", 4, 400);
+        Upgrade i_a2 = new Upgrade("IceShard", "amount", 6, 800);
+        Upgrade i_a3 = new Upgrade("IceShard", "amount", 8, 1400);
+        //ice speed
+        Upgrade i_s1 = new Upgrade("IceShard", "speed", 2, 200);
+        Upgrade i_s2 = new Upgrade("IceShard", "speed", 3, 700);
+        Upgrade i_s3 = new Upgrade("IceShard", "speed", 4, 1200);
+
+        //light dps
+        Upgrade l_d1 = new Upgrade("Lightning", "dps", 2, 300);
+        Upgrade l_d2 = new Upgrade("Lightning", "dps", 3, 700);
+        Upgrade l_d3 = new Upgrade("Lightning", "dps", 4, 1300);
+        Upgrade l_d4 = new Upgrade("Lightning", "dps", 5, 1700);
+        Upgrade l_d5 = new Upgrade("Lightning", "dps", 6, 2100);
+        //light amount
+        Upgrade l_a1 = new Upgrade("Lightning", "amount", 150, 400);
+        Upgrade l_a2 = new Upgrade("Lightning", "amount", 100, 800);
+        //ice speed
+        Upgrade l_s1 = new Upgrade("Lightning", "speed", 1.5f, 200);
+        Upgrade l_s2 = new Upgrade("Lightning", "speed", 1, 700);
 
         upgrades.Add(f_d1);
         upgrades.Add(f_d2);
@@ -141,7 +142,10 @@ public class UpgradeSystem : MonoBehaviour
         if (canAfford.Count > 0) //must be able to afford one upgrade to show anything...
         {
             //string finalStr = "Upgrade Options " + wave + ": |";
-
+foreach(Upgrade upgrade in canAfford)
+            {
+                Debug.Log(upgrade.displayAll());
+            }
             int maxChoices = 3;
             string[] choiceTxt = new string[maxChoices+1]; // +1 so code doesn't flake out for some reason
             for (int i = 0; i < maxChoices; i++)
@@ -170,6 +174,7 @@ public class UpgradeSystem : MonoBehaviour
                 canAfford.RemoveAt(r);
             }
             //Debug.Log(finalStr);
+            
             Debug.Log("Wave " + wave + " | " + choiceTxt[0] + " | " + choiceTxt[1] + " | " + choiceTxt[2] + " |");
 
             setUpgradeUI(choiceTxt);
@@ -255,6 +260,7 @@ public class UpgradeSystem : MonoBehaviour
                 upgrades.Remove(upgrade);
                 Debug.Log("Removing|" + upgrade.displayAll());
                 clearUI();
+                upgradeChoices.Clear();
                 return;
             }
         }
