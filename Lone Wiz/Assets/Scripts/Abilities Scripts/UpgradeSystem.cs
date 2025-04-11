@@ -18,10 +18,9 @@ public class UpgradeSystem : MonoBehaviour
     Ability Fireball = new Ability();
     Ability IceShard = new Ability();
     Ability Lightning = new Ability();
-    Ability Shield = new Ability();
+    //Ability Shield = new Ability();
     #endregion
     List<Upgrade> upgrades = new List<Upgrade>();
-    
     List<Upgrade> upgradeChoices = new List<Upgrade>();
     private void Awake()
     {
@@ -130,11 +129,6 @@ public class UpgradeSystem : MonoBehaviour
          * Takes remaining upgrades and the player's score to seperate which upgrades the player can afford...
          * Then randomly selects 3 from the upgrades remaining to present to the player...
          */
-        //foreach(Upgrade up in upgrades)
-        //{
-        //    Debug.Log("Wave:" + wave + "|"+ up.displayAll());
-        //}
-
 
         List<Upgrade> canAfford = new List<Upgrade>();
         Debug.Log("Upgrades Left: " + upgrades.Count);
@@ -148,13 +142,7 @@ public class UpgradeSystem : MonoBehaviour
         Debug.Log("Wave " + wave + " | Amount of Avaliable Upgrades: " + canAfford.Count + " | Score: " + score);
         if (canAfford.Count > 0) //must be able to afford one upgrade to show anything...
         {
-            
-            //foreach(Upgrade upgrade in canAfford)
-            //{
-            //    Debug.Log(upgrade.displayAll());
-            //}
             int maxChoices = 3;
-            //int range = canAfford.Count - 1;
             string[] choiceTxt = new string[maxChoices+1]; // +1 so code doesn't flake out for some reason
             for (int i = 0; i < maxChoices; i++)
             {
@@ -173,7 +161,6 @@ public class UpgradeSystem : MonoBehaviour
                 choiceTxt[i] = tempStr;
 
                 upgradeChoices.Add(temp);
-                //Debug.Log(temp.displayAll());
                 
                 canAfford.RemoveAt(r);
             }
@@ -190,9 +177,9 @@ public class UpgradeSystem : MonoBehaviour
         wave++;
         UI.updateOptionTxt();
     }
-
-    public void setUpgradeUI(string[] str)
+    public void setUpgradeUI(string[] str) 
     {
+        //Effects UI
         option1 = null; option2 = null; option3 = null;
         if (!string.IsNullOrEmpty(str[0])) 
         {
@@ -207,9 +194,9 @@ public class UpgradeSystem : MonoBehaviour
             option3 = str[2];
         }
     }
-
     public void selectInput(string str)
     {
+        //In responce to UI buttons when selected
         Upgrade selected;
         switch (str)
         {
@@ -217,24 +204,26 @@ public class UpgradeSystem : MonoBehaviour
                 selected = upgradeChoices[0];
                 removeFromList(selected);
                 removeLesserElements(selected);
+                updateAbility(selected);
                 score -= selected.Cost;
                 break;
             case "2":
                 selected = upgradeChoices[1];
                 removeFromList(selected);
                 removeLesserElements(selected);
+                updateAbility(selected);
                 score -= selected.Cost;
                 break; 
             case "3":
                 selected = upgradeChoices[2];
                 removeFromList(selected);
                 removeLesserElements(selected);
+                updateAbility(selected);
                 score -= selected.Cost;
                 break;
         }
         
     }
-
     public void removeFromList(Upgrade selected)
     {
         //Match selected ID to remove from main list of upgrades...
@@ -260,9 +249,16 @@ public class UpgradeSystem : MonoBehaviour
         foreach(Upgrade upgrade in upgrades)
         {
             if(upgrade.AbilityName == selected.AbilityName)
+            {
                 if (upgrade.UpgradeType == selected.UpgradeType)
+                {
                     if(upgrade.Change < selected.Change)
+                    {
                         deleteList.Add(upgrade);
+                    }
+                }
+            }
+                
         }
         foreach(Upgrade upgrade in deleteList)
         {
@@ -278,15 +274,63 @@ public class UpgradeSystem : MonoBehaviour
             upgradeChoices.Clear();
             UI.updateOptionTxt();
         }
-
     public void dislpayUpgList()
     {
+        //button UI to display all upgrades left...
         foreach(Upgrade upgrade in upgrades)
             Debug.Log(upgrade.displayAll());
     }
-    /*
-     * ----Notes-----
-     * Button UI includes: selection of upgrade for each button, button txt has to be ablt to change
-     * What I need: Methods that can return upgrade name and txt....
-     */
-}
+    public void updateAbility(Upgrade selected)
+    {
+        switch(selected.AbilityName)
+        {
+            case "Fireball":
+                switch (selected.UpgradeType)
+                {
+                    case "dps":
+                        Fireball.Dps = (int)selected.Change;
+                        return;
+                    case "amount":
+                        Fireball.Amount = (int)selected.Change;
+                        return;
+                    case "speed":
+                        Fireball.Speed = selected.Change;
+                        return;
+                }
+                break;
+            case "IceShard":
+                switch (selected.UpgradeType)
+                {
+                    case "dps":
+                        IceShard.Dps = (int)selected.Change;
+                        return;
+                    case "amount":
+                        IceShard.Amount = (int)selected.Change;
+                        return;
+                    case "speed":
+                        IceShard.Speed = selected.Change;
+                        return;
+                }
+                break;
+            case "Lightning":
+                switch (selected.UpgradeType)
+                {
+                    case "dps":
+                        Lightning.Dps = (int)selected.Change;
+                        return;
+                    case "amount":
+                        Lightning.Amount = (int)selected.Change;
+                        return;
+                    case "speed":
+                        Lightning.Speed = selected.Change;
+                        return;
+                }
+                break;
+        }
+    }
+        /*
+         * ----Notes-----
+         * Button UI includes: selection of upgrade for each button, button txt has to be ablt to change
+         * What I need: Methods that can return upgrade name and txt....
+         */
+    }

@@ -22,7 +22,6 @@ public class Upgrade : MonoBehaviour
         Cost = cost;
         Debug.Log(displayAll());
     }
-
     public string displayAll()
     {
         return "ID: " +ID + "|Ability: " + AbilityName + "\n|Upgrade: " + UpgradeType + "|Increase to: " + Change + "|Cost:" + Cost;
