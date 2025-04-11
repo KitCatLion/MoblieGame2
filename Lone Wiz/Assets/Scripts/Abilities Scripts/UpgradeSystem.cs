@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 //using UnityEngine.Windows;
 
 public class UpgradeSystem : MonoBehaviour
 {
-    public int score = 0;
+    public int score;
 
     int wave = 1;
     public string option1, option2, option3;
@@ -129,8 +130,14 @@ public class UpgradeSystem : MonoBehaviour
          * Takes remaining upgrades and the player's score to seperate which upgrades the player can afford...
          * Then randomly selects 3 from the upgrades remaining to present to the player...
          */
+        //foreach(Upgrade up in upgrades)
+        //{
+        //    Debug.Log("Wave:" + wave + "|"+ up.displayAll());
+        //}
+
+
         List<Upgrade> canAfford = new List<Upgrade>();
-        Debug.Log(upgrades.Count);
+        Debug.Log("Upgrades Left: " + upgrades.Count);
         foreach (Upgrade upgrade in upgrades)
         {
             if (upgrade.Cost <= score) //&& upgrade.Cost > score - 400 //Shouldn't need as the player will need to upgrade as game progresses or they will lose, shouldn't be saving up score.
@@ -141,39 +148,36 @@ public class UpgradeSystem : MonoBehaviour
         Debug.Log("Wave " + wave + " | Amount of Avaliable Upgrades: " + canAfford.Count + " | Score: " + score);
         if (canAfford.Count > 0) //must be able to afford one upgrade to show anything...
         {
-            //string finalStr = "Upgrade Options " + wave + ": |";
-foreach(Upgrade upgrade in canAfford)
-            {
-                Debug.Log(upgrade.displayAll());
-            }
+            
+            //foreach(Upgrade upgrade in canAfford)
+            //{
+            //    Debug.Log(upgrade.displayAll());
+            //}
             int maxChoices = 3;
+            //int range = canAfford.Count - 1;
             string[] choiceTxt = new string[maxChoices+1]; // +1 so code doesn't flake out for some reason
             for (int i = 0; i < maxChoices; i++)
             {
-                if(canAfford.Count == 0)
+                int r;
+                if (canAfford.Count > 3)
+                    r = Random.Range(0, canAfford.Count);
+                else if(canAfford.Count == 0)
                 {
-                    Debug.Log("hapy");
                     break;
                 }
-                /*string s = "|";
-                //foreach(Upgrade upgrade in canAfford)
-                //{
-                //    s += upgrade.AbilityName + ", " + upgrade.UpgradeType + "->" +  upgrade.Change + ": " + upgrade.Cost.ToString() + "|";
-                */
-                int r = Random.Range(0, canAfford.Count);
-                //Debug.Log("Wave " + wave + " | " + r + " | " + canAfford.Count + " | " + i);
+                else r = canAfford.Count-1;
+
                 Upgrade temp = canAfford[r];
                 string tempStr = i+1 + ") " + temp.AbilityName + " " + temp.Cost.ToString();
-                //Debug.Log(x + "|" + temp.AbilityName + ", " + temp.UpgradeType + ": " + temp.Cost.ToString());
 
                 choiceTxt[i] = tempStr;
-                //finalStr += tempStr + "|";
 
                 upgradeChoices.Add(temp);
+                //Debug.Log(temp.displayAll());
                 
                 canAfford.RemoveAt(r);
             }
-            //Debug.Log(finalStr);
+            
             
             Debug.Log("Wave " + wave + " | " + choiceTxt[0] + " | " + choiceTxt[1] + " | " + choiceTxt[2] + " |");
 
@@ -206,45 +210,26 @@ foreach(Upgrade upgrade in canAfford)
 
     public void selectInput(string str)
     {
-        /*
-         * Use foreach to find the ID of the selected upgrade.
-         * Use foreach to then remove the ID in the list that matches 
-         */
         Upgrade selected;
         switch (str)
         {
             case "1":
                 selected = upgradeChoices[0];
-                //int x = upgrades.IndexOf(selected); //completely bugged, always returns 0 //add list to array so can pick out the exact element to delete...
-                //Debug.Log(x + ". " + upgrades[x].AbilityName + "," + upgrades[x].UpgradeType);
-                //Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
-                //    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
-
-                //upgrades.RemoveAt(x);
                 removeFromList(selected);
-                //clearUI();
+                removeLesserElements(selected);
+                score -= selected.Cost;
                 break;
             case "2":
                 selected = upgradeChoices[1];
-                //int y = upgrades.IndexOf(selected);
-                //Debug.Log(y + ". " + upgrades[y].AbilityName + "," + upgrades[y].UpgradeType);
-                //Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
-                //    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
-
-                //upgrades.RemoveAt(y);
                 removeFromList(selected);
-                //clearUI();
+                removeLesserElements(selected);
+                score -= selected.Cost;
                 break; 
             case "3":
                 selected = upgradeChoices[2];
-                //int z = upgrades.IndexOf(selected);
-                //Debug.Log(z + ". " + upgrades[z].AbilityName + "," + upgrades[z].UpgradeType);
-                //Debug.Log("Wave " + wave + "|" + "Removing" + "|Ability: " + selected.AbilityName
-                //    + "\n|Upgrade: " + selected.UpgradeType + "|Increase to: " + selected.Change + "|Cost:" + selected.Cost + "|");
-
-                //upgrades.RemoveAt(z);
                 removeFromList(selected);
-                //clearUI();
+                removeLesserElements(selected);
+                score -= selected.Cost;
                 break;
         }
         
@@ -253,18 +238,36 @@ foreach(Upgrade upgrade in canAfford)
     public void removeFromList(Upgrade selected)
     {
         //Match selected ID to remove from main list of upgrades...
+        int c = 0;
         foreach(Upgrade upgrade in upgrades)
         {
             if (upgrade.ID == selected.ID)
             {
-                upgrades.Remove(upgrade);
+                //Debug.Log(upgrade.ID + "|" + selected.ID);
+                
                 Debug.Log("Removing|" + upgrade.displayAll());
                 clearUI();
+                upgrades.RemoveAt(c);
                 upgradeChoices.Clear();
                 return;
             }
+            c++;
         }
-        
+    }
+    public void removeLesserElements(Upgrade selected)
+    {
+        List<Upgrade> deleteList = new List<Upgrade>();
+        foreach(Upgrade upgrade in upgrades)
+        {
+            if(upgrade.AbilityName == selected.AbilityName)
+                if (upgrade.UpgradeType == selected.UpgradeType)
+                    if(upgrade.Change < selected.Change)
+                        deleteList.Add(upgrade);
+        }
+        foreach(Upgrade upgrade in deleteList)
+        {
+            removeFromList(upgrade);
+        }
     }
     public void clearUI()
         {
@@ -275,6 +278,12 @@ foreach(Upgrade upgrade in canAfford)
             upgradeChoices.Clear();
             UI.updateOptionTxt();
         }
+
+    public void dislpayUpgList()
+    {
+        foreach(Upgrade upgrade in upgrades)
+            Debug.Log(upgrade.displayAll());
+    }
     /*
      * ----Notes-----
      * Button UI includes: selection of upgrade for each button, button txt has to be ablt to change

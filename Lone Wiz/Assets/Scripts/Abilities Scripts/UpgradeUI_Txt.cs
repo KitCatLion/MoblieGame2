@@ -18,9 +18,9 @@ public class UpgradeUI_Txt : MonoBehaviour
         Option3.text = UpgradeUI.option3;
     }
 
-    bool existingOptions()
+    bool existingOptions(TextMeshProUGUI txt)
     {
-        if (!string.IsNullOrEmpty(Option1.text))
+        if (!string.IsNullOrEmpty(txt.text))
         {
             return true;
         }
@@ -29,7 +29,7 @@ public class UpgradeUI_Txt : MonoBehaviour
 
     public void option1()
     {
-        if (!existingOptions())
+        if (!existingOptions(Option1))
         {
             Debug.Log("Nothing there...");
             return;
@@ -39,7 +39,7 @@ public class UpgradeUI_Txt : MonoBehaviour
     }
     public void option2()
     {
-        if (!existingOptions())
+        if (!existingOptions(Option2))
         {
             Debug.Log("Nothing there...");
             return;
@@ -48,9 +48,9 @@ public class UpgradeUI_Txt : MonoBehaviour
     }
     public void option3()
     {
-        if (!existingOptions())
+        if (!existingOptions(Option3))
         {
-            Debug.Log("Nothing there...");
+            Debug.Log("Nothing there..."); //fix
             return;
         }
         UpgradeUI.selectInput("3");
