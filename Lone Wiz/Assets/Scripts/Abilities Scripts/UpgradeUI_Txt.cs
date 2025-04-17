@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,7 @@ public class UpgradeUI_Txt : MonoBehaviour
     public Image Card1, Card2, Card3;
 
     //public Sprite sFire, mFire, lFire, sIceShard, mIceShard, lIceShard, sLightning, mLightning, lLightning;
-    //public List<Sprite> UpgradeImages;
+    public Sprite[] UpgradeImages;
 
     public UpgradeSystem UpgradeUI;
 
@@ -26,6 +27,7 @@ public class UpgradeUI_Txt : MonoBehaviour
     {
         updateOptionTxt();
         removedTxt.text = "";
+
     }
 
     private void Update()
@@ -43,8 +45,25 @@ public class UpgradeUI_Txt : MonoBehaviour
     public void updateOptionTxt()
     {
         Option1.text = UpgradeUI.option1;
+        if (UpgradeUI.option1 != null)
+        {
+            updateImage(1, UpgradeUI.option1);
+        }
+        else Card1 = null;
+
         Option2.text = UpgradeUI.option2;
+        if (UpgradeUI.option1 != null)
+        {
+            updateImage(2, UpgradeUI.option2);
+        }
+        else Card1 = null;
+
         Option3.text = UpgradeUI.option3;
+        if (UpgradeUI.option1 != null)
+        {
+            updateImage(3, UpgradeUI.option3);
+        }
+        else Card1 = null;
     }
 
     bool existingOptions(TextMeshProUGUI txt)
@@ -54,6 +73,59 @@ public class UpgradeUI_Txt : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void updateImage(int option, string str)
+    {
+        string name;
+        int cost;
+        string[] arr = str.Split('\n');
+        name = arr[0];
+        cost = int.Parse(arr[2]);
+
+        Sprite[] tempSprites = new Sprite[3];
+        switch (name)
+        {
+            case "Fireball":
+                tempSprites[0] = UpgradeImages[0]; //small
+                tempSprites[1] = UpgradeImages[1]; //medium
+                tempSprites[2] = UpgradeImages[2]; //large
+                break;
+            case "Ice Shard":
+                tempSprites[0] = UpgradeImages[3];
+                tempSprites[1] = UpgradeImages[4];
+                tempSprites[2] = UpgradeImages[5];
+                break;
+            case "Lightning":
+                tempSprites[0] = UpgradeImages[6];
+                tempSprites[1] = UpgradeImages[7];
+                tempSprites[2] = UpgradeImages[8];
+                break;
+        }
+
+        Sprite sprite;
+        if (cost > 1500)
+        {
+            sprite = tempSprites[2];
+        }
+        else if(cost > 700)
+        {
+            sprite = tempSprites[1];
+        }
+        else sprite = tempSprites[0];
+
+        switch(option)
+        {
+            case 1: 
+                Card1.sprite = sprite;
+                break;
+            case 2:
+                Card2.sprite = sprite;
+                break;
+            case 3:
+                Card3.sprite = sprite;
+                break;
+        }
     }
 
     public void option1()
