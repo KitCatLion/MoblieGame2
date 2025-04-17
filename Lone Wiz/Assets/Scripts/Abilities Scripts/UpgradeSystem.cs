@@ -73,8 +73,8 @@ public class UpgradeSystem : MonoBehaviour
         Upgrade l_a1 = new Upgrade("Lightning", "amount", 150, 400);
         Upgrade l_a2 = new Upgrade("Lightning", "amount", 100, 800);
         //ice speed
-        Upgrade l_s1 = new Upgrade("Lightning", "speed", 1.5f, 200);
-        Upgrade l_s2 = new Upgrade("Lightning", "speed", 1, 700);
+        Upgrade l_s1 = new Upgrade("Lightning", "speed", 1f, 200);
+        Upgrade l_s2 = new Upgrade("Lightning", "speed", 1.5f, 700);
 
         upgrades.Add(f_d1);
         upgrades.Add(f_d2);
@@ -156,7 +156,7 @@ public class UpgradeSystem : MonoBehaviour
                 else r = canAfford.Count-1;
 
                 Upgrade temp = canAfford[r];
-                string tempStr = i+1 + ") " + temp.AbilityName + " " + temp.Cost.ToString();
+                string tempStr = temp.AbilityName + "\nCost:\n " + temp.Cost.ToString() + " Points";
 
                 choiceTxt[i] = tempStr;
 
@@ -202,6 +202,7 @@ public class UpgradeSystem : MonoBehaviour
         {
             case "1":
                 selected = upgradeChoices[0];
+                UI.upgradeRemoved = selected.displayAll();
                 removeFromList(selected);
                 removeLesserElements(selected);
                 updateAbility(selected);
@@ -209,6 +210,7 @@ public class UpgradeSystem : MonoBehaviour
                 break;
             case "2":
                 selected = upgradeChoices[1];
+                UI.upgradeRemoved = selected.displayAll();
                 removeFromList(selected);
                 removeLesserElements(selected);
                 updateAbility(selected);
@@ -216,6 +218,7 @@ public class UpgradeSystem : MonoBehaviour
                 break; 
             case "3":
                 selected = upgradeChoices[2];
+                UI.upgradeRemoved = selected.displayAll();
                 removeFromList(selected);
                 removeLesserElements(selected);
                 updateAbility(selected);
