@@ -45,11 +45,11 @@ public class UpgradeUI_Txt : MonoBehaviour
     public void updateOptionTxt()
     {
         Option1.text = UpgradeUI.option1;
-        //if (UpgradeUI.option1 != null)
-        //{
-        //    updateImage(1, UpgradeUI.option1);
-        //}
-        //else Card1 = null;
+        if (UpgradeUI.option1 != null)
+        {
+            updateImage(1, UpgradeUI.option1);
+        }
+        else Card1 = null;
 
         Option2.text = UpgradeUI.option2;
         //if (UpgradeUI.option1 != null)
@@ -77,11 +77,15 @@ public class UpgradeUI_Txt : MonoBehaviour
 
     public void updateImage(int option, string str)
     {
-        string name;
-        int cost;
+        
+        
+        string name, editedCost;
+        int cost = 0;
         string[] arr = str.Split('\n');
         name = arr[0];
-        cost = int.Parse(arr[2]);
+        
+        //cost = int.Parse(arr[2]);
+        
 
         Sprite[] tempSprites = new Sprite[3];
         switch (name)

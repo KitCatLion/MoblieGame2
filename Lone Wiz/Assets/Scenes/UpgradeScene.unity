@@ -1306,6 +1306,42 @@ PrefabInstance:
       propertyPath: UpgradeImages.Array.size
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[0]'
+      value: 
+      objectReference: {fileID: -1342495428671612055, guid: 0a5bf12d0c5cc9440b4854c1614e4e55, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[1]'
+      value: 
+      objectReference: {fileID: -7774072194497180841, guid: 742986c6c3e334945a2483683da55709, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[2]'
+      value: 
+      objectReference: {fileID: 9074551046042211308, guid: 829a3f0b86da3c44f897ec702c4bed10, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[3]'
+      value: 
+      objectReference: {fileID: -3364386852092433748, guid: 9d069e2af72c630488e91c451ec8c1c8, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[4]'
+      value: 
+      objectReference: {fileID: -8187293561470616707, guid: bc7ee57c4bce21e439af0fd3c4f392ae, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[5]'
+      value: 
+      objectReference: {fileID: -1558713998407273489, guid: ab9f4efb8ebe25b4491b9bc0de457a02, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[6]'
+      value: 
+      objectReference: {fileID: -1479813559328155586, guid: 40836205594b83745b16a85c25f5d5ac, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[7]'
+      value: 
+      objectReference: {fileID: -2681545882761581207, guid: c243f41525b6d4f4e8209cd5650aef7b, type: 3}
+    - target: {fileID: 5198625681574309713, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
+      propertyPath: 'UpgradeImages.Array.data[8]'
+      value: 
+      objectReference: {fileID: 4501648653735495389, guid: 27407b39585975743924f23af7e42ea9, type: 3}
     - target: {fileID: 6765290279514279745, guid: d19106e63c67b5e4f8f1291d89f7e132, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
