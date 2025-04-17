@@ -45,25 +45,25 @@ public class UpgradeUI_Txt : MonoBehaviour
     public void updateOptionTxt()
     {
         Option1.text = UpgradeUI.option1;
-        if (UpgradeUI.option1 != null)
-        {
-            updateImage(1, UpgradeUI.option1);
-        }
-        else Card1 = null;
+        //if (UpgradeUI.option1 != null)
+        //{
+        //    updateImage(1, UpgradeUI.option1);
+        //}
+        //else Card1 = null;
 
         Option2.text = UpgradeUI.option2;
-        if (UpgradeUI.option1 != null)
-        {
-            updateImage(2, UpgradeUI.option2);
-        }
-        else Card1 = null;
+        //if (UpgradeUI.option1 != null)
+        //{
+        //    updateImage(2, UpgradeUI.option2);
+        //}
+        //else Card1 = null;
 
         Option3.text = UpgradeUI.option3;
-        if (UpgradeUI.option1 != null)
-        {
-            updateImage(3, UpgradeUI.option3);
-        }
-        else Card1 = null;
+        //if (UpgradeUI.option1 != null)
+        //{
+        //    updateImage(3, UpgradeUI.option3);
+        //}
+        //else Card1 = null;
     }
 
     bool existingOptions(TextMeshProUGUI txt)
